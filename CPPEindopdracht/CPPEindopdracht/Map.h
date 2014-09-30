@@ -2,7 +2,10 @@
 class Map
 {
 public:
-	Map();
+	Map(int horizontalSize, int verticalSize, int floorNumber);
 	~Map();
+
+private:
+
 };
 

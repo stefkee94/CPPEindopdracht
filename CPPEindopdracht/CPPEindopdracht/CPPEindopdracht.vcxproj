@@ -66,12 +66,12 @@
   <ItemGroup>
     <ClInclude Include="Main.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Room.h" />
+    <ClInclude Include="Chamber.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Room.cpp" />
+    <ClCompile Include="Chamber.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

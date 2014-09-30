@@ -6,9 +6,6 @@
 
 using namespace std;
 
-Map* map;
-bool playing;
-
 const int MAXCOMMANDS = 2;
 const string allCommands[MAXCOMMANDS] = { "quit", "?" };
 
@@ -56,12 +53,20 @@ void doCommand(string command)
 
 Main::Main()
 {
-	map = new Map();
 	playing = true;
 
 	string command;
 
-	cout << "Welcome to this roquelike game! Please give a command (See all the possible commands by typing '?'): " << std::endl;
+	cout << "Welcome to this roquelike game! Please set the size of the map : " << endl;
+	cout << "Horizontal : " << horizontal << endl;
+	//cin >> horizontal;
+
+	cout << "Vertical : " << vertical << endl;
+	//cin >> vertical;
+
+	// Create new Map
+	map = new Map(horizontal, vertical, floorNumber);
+
 	while (playing)
 	{
 		getline(cin, command);
@@ -72,7 +77,7 @@ Main::Main()
 		}
 		else
 		{
-			cout << "The command you entered: '" << command << "' is invalid! Try another command: " << std::endl;
+			cout << "The command you entered: '" << command << "' is invalid! Try another command: " << endl;
 		}
 	}
 }
