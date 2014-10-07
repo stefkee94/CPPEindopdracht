@@ -2,13 +2,16 @@
 
 #include <string>
 
+int Map::horizontalMapSize = 0;
+int Map::verticalMapSize = 0;
+
 void Map::generateRandomMap()
 {
 	for (int x = 0; x < horizontalMapSize; x++)
 	{
 		for (int y = 0; y < verticalMapSize; y++)
 		{
-			chamberList[x][y] = new Chamber(x, y);
+			chamberList[y][x] = new Chamber(x, y);
 		}
 	}
 }

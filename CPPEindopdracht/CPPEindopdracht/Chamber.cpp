@@ -12,6 +12,11 @@ int Chamber::randomNumber(int min, int max)
 void Chamber::generateRandomChamber(int x, int y)
 {
 	int numberOfExits = 1;
+	//Standard all the exits are false
+	north = false;
+	east = false;
+	south = false;
+	west = false;
 
 	//Max exits = 2 (corners)
 	if ((x == 0 && y == 0) || (x == 0 && y == Map::verticalMapSize) || (x == Map::horizontalMapSize && y == 0) || (x == Map::horizontalMapSize && y == Map::verticalMapSize))
