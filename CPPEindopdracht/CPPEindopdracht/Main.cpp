@@ -55,6 +55,7 @@ Main::Main()
 
 	cout << "Welcome to this roquelike game! Please set the size of the map : " << endl;
 
+	//TODO catch string input
 	while (!playing)
 	{
 		cout << "Horizontal : " << endl;
@@ -72,11 +73,6 @@ Main::Main()
 			cout << "The values are not correct, please enter new values. (minimum value = 5 and maximum value = 20)" << endl;
 		}
 	}
-	//cout << "Horizontal : " << horizontal << endl;
-	//cin >> horizontal;
-
-	//cout << "Vertical : " << vertical << endl;
-	//cin >> vertical;
 
 	// Create new Map
 	map = new Map(horizontal, vertical, floorNumber);
