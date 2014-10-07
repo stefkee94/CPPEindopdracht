@@ -2,14 +2,11 @@
 #include "Map.h"
 
 #include <iostream>
-#include <string>
-
-using namespace std;
 
 const int MAXCOMMANDS = 2;
 const string allCommands[MAXCOMMANDS] = { "quit", "?" };
 
-bool checkCommand(string command)
+bool Main::checkCommand(string command)
 {
 	for (int i = 0; i < MAXCOMMANDS; ++i)
 	{
@@ -22,7 +19,7 @@ bool checkCommand(string command)
 	return false;
 }
 
-void printCommands()
+void Main::printCommands()
 {
 	for (int i = 0; i < MAXCOMMANDS; i++)
 	{
@@ -37,7 +34,7 @@ void printCommands()
 	}
 }
 
-void doCommand(string command)
+void Main::doCommand(string command)
 {
 	//if command = quit
 	if (command == allCommands[0])
@@ -53,15 +50,32 @@ void doCommand(string command)
 
 Main::Main()
 {
-	playing = true;
-
+	playing = false;
 	string command;
 
 	cout << "Welcome to this roquelike game! Please set the size of the map : " << endl;
-	cout << "Horizontal : " << horizontal << endl;
+
+	while (!playing)
+	{
+		cout << "Horizontal : " << endl;
+		cin >> horizontal;
+
+		cout << "Vertical : " << endl;
+		cin >> vertical;
+
+		if (horizontal >= 5 && vertical >= 5 && horizontal <= 20 && vertical <= 20)
+		{
+			playing = true;
+		}
+		else
+		{
+			cout << "The values are not correct, please enter new values. (minimum value = 5 and maximum value = 20)" << endl;
+		}
+	}
+	//cout << "Horizontal : " << horizontal << endl;
 	//cin >> horizontal;
 
-	cout << "Vertical : " << vertical << endl;
+	//cout << "Vertical : " << vertical << endl;
 	//cin >> vertical;
 
 	// Create new Map
