@@ -1,6 +1,6 @@
 #pragma once
 #include "Map.h"
-
+#include "MapObject.h"
 #include <string>
 
 using namespace std;
@@ -13,6 +13,7 @@ public:
 
 private:
 	Map* map;
+	MapObject map_object;
 	bool playing;
 	int horizontal = 10;
 	int vertical = 10;

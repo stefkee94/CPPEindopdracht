@@ -1,6 +1,6 @@
 #include "Main.h"
 #include "Map.h"
-
+#include "Hero.h"
 #include <iostream>
 
 const int MAXCOMMANDS = 2;
@@ -76,6 +76,9 @@ Main::Main()
 
 	// Create new Map
 	map = new Map(horizontal, vertical, floorNumber);
+	std::vector<ItemType> item_types;
+	// Create hero in the beginning
+	map_object = Hero(std::string("The_hero"),1,100,100,1,1,10,Inventory(20, item_types));
 
 	while (playing)
 	{

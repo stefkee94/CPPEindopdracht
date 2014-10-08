@@ -17,6 +17,6 @@ public:
 	~Map();
 
 private:
-	void generateRandomMap();
+	void generateRandomMap(int floor_number);
 };
 

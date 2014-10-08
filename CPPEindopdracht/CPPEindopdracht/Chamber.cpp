@@ -1,5 +1,6 @@
 #include "Chamber.h"
 #include "Map.h"
+#include "Enemy.h"
 
 #include <string>
 #include <vector>
@@ -303,9 +304,31 @@ void Chamber::generateRandomChamber(int x, int y)
 	}
 }
 
-Chamber::Chamber(int x, int y)
+void Chamber::generateRandomEnemy(int floor_number)
+{
+	switch (floor_number)
+	{
+		case 5:
+			// implementation of enemy with floor_number 5
+			break;
+		case 4:
+			// same
+			break;
+		case 3:
+			break;
+		case 2:
+			break;
+		case 1:
+			break;
+		default:
+			break;
+	}
+}
+
+Chamber::Chamber(int x, int y, int floor_number)
 {
 	generateRandomChamber(x, y);
+	generateRandomEnemy(floor_number);
 }
 
 Chamber::~Chamber()
