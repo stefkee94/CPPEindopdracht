@@ -1,6 +1,10 @@
 #pragma once
-#include "Map.h"
+
 #include "MapObject.h"
+#include "Map.h"
+#include "Hero.h"
+
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -13,7 +17,7 @@ public:
 
 private:
 	Map* map;
-	MapObject map_object;
+	Hero* hero;
 	bool playing;
 	int horizontal = 10;
 	int vertical = 10;
@@ -21,6 +25,8 @@ private:
 
 	bool checkCommand(string command);
 	void printCommands();
+	void printExits();
+	void goTo(string exit);
 	void doCommand(string command);
 };
 

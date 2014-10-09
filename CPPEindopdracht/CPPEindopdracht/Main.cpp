@@ -1,10 +1,8 @@
 #include "Main.h"
-#include "Map.h"
-#include "Hero.h"
-#include <iostream>
 
-const int MAXCOMMANDS = 2;
-const string allCommands[MAXCOMMANDS] = { "quit", "?" };
+
+const int MAXCOMMANDS = 7;
+const string allCommands[MAXCOMMANDS] = { "exits", "go north", "go east", "go south", "go west", "quit", "?" };
 
 bool Main::checkCommand(string command)
 {
@@ -24,25 +22,70 @@ void Main::printCommands()
 	for (int i = 0; i < MAXCOMMANDS; i++)
 	{
 		if (i == (MAXCOMMANDS - 1))
-		{
-			cout << allCommands[i] << std::endl;
-		}
+			cout << allCommands[i] << endl;
 		else
-		{
 			cout << allCommands[i] + ", ";
-		}
+	}
+}
+
+void Main::printExits()
+{
+	list<string> exits = map->getExits(hero->getXPos(), hero->getYPos());
+	list<string>::iterator it;
+
+	cout << "You can go: ";
+
+	int i = 0;
+	for (it = exits.begin(); it != exits.end(); ++it, ++i) {
+		if (i == (exits.size() - 1))
+			cout << *it << endl;
+		else
+			cout << *it + ", ";
+	}
+}
+
+void Main::goTo(string exit)
+{
+	if (map->hasExit(hero->getXPos(), hero->getYPos(), exit))
+	{
+		if (exit == "north")
+			hero->setYPos(hero->getYPos() - 1);
+		if (exit == "east")
+			hero->setXPos(hero->getXPos() + 1);
+		if (exit == "south")
+			hero->setYPos(hero->getYPos() + 1);
+		if (exit == "west")
+			hero->setXPos(hero->getXPos() - 1);
+
+		cout << "Welcome in the room to the " + exit + " of the previous room." << endl;
+		printExits();
+	}
+	else
+	{
+		cout << "There is no exit that way." << endl;
 	}
 }
 
 void Main::doCommand(string command)
 {
-	//if command = quit
+	//if command = exits
 	if (command == allCommands[0])
+	{
+		printExits();
+	}
+	//if command = go north || go east || go south || go west
+	if (command == allCommands[1] || command == allCommands[2] || command == allCommands[3] || command == allCommands[4])
+	{
+		string exit = command.substr(3);
+		goTo(exit);
+	}
+	//if command = quit
+	if (command == allCommands[5])
 	{
 		exit(EXIT_SUCCESS);
 	}
-
-	if (command == allCommands[1])
+	//if command = ?
+	if (command == allCommands[6])
 	{
 		printCommands();
 	}
@@ -74,11 +117,14 @@ Main::Main()
 		}
 	}
 
-	// Create new Map
+	// Create new random Map
 	map = new Map(horizontal, vertical, floorNumber);
+
 	std::vector<ItemType> item_types;
 	// Create hero in the beginning
-	map_object = Hero(std::string("The_hero"),1,100,100,1,1,10,Inventory(20, item_types));
+	hero = new Hero(std::string("The_hero"),1,100,100,1,1,10,Inventory(20, item_types));
+
+	printExits();
 
 	while (playing)
 	{
@@ -90,13 +136,15 @@ Main::Main()
 		}
 		else
 		{
-			cout << "The command you entered: '" << command << "' is invalid! Try another command: " << endl;
+			if (command != "")
+				cout << "The command you entered: '" << command << "' is invalid! Try another command (see possible commands by typing '?'): " << endl;
 		}
 	}
 }
 
 Main::~Main()
 {
+	delete map;
 }
 
 int main()

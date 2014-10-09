@@ -1,9 +1,4 @@
 #include "Chamber.h"
-#include "Map.h"
-#include "Enemy.h"
-
-#include <string>
-#include <vector>
 
 int Chamber::randomNumber(int min, int max)
 {
@@ -304,9 +299,9 @@ void Chamber::generateRandomChamber(int x, int y)
 	}
 }
 
-void Chamber::generateRandomEnemy(int floor_number)
+void Chamber::generateRandomEnemy()
 {
-	switch (floor_number)
+	switch (floorNumber)
 	{
 		case 5:
 			// implementation of enemy with floor_number 5
@@ -325,10 +320,61 @@ void Chamber::generateRandomEnemy(int floor_number)
 	}
 }
 
+#pragma region exitGettersAndSetters
+bool Chamber::hasExitNorth()
+{
+	return north;
+}
+
+bool Chamber::hasExitEast()
+{
+	return east;
+}
+
+bool Chamber::hasExitSouth()
+{
+	return south;
+}
+
+bool Chamber::hasExitWest()
+{
+	return west;
+}
+
+void Chamber::setExitNorth()
+{
+	north = true;
+}
+
+void Chamber::setExitEast()
+{
+	east = true;
+}
+
+void Chamber::setExitSouth()
+{
+	south = true;
+}
+
+void Chamber::setExitWest()
+{
+	west = true;
+}
+#pragma endregion exitGettersAndSetters
+
 Chamber::Chamber(int x, int y, int floor_number)
 {
+	floorNumber = floor_number;
 	generateRandomChamber(x, y);
-	generateRandomEnemy(floor_number);
+	generateRandomEnemy();
+}
+
+Chamber::Chamber()
+{
+	north = false;
+	east = false;
+	south = false;
+	west = false;
 }
 
 Chamber::~Chamber()

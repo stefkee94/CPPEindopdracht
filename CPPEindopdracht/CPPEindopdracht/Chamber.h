@@ -1,16 +1,31 @@
 #pragma once
-#include <vector>
+
+#include "Map.h"
+#include "Enemy.h"
 
 class Chamber
 {
 public:
 	Chamber(int x, int y, int floor_number);
+	Chamber();
 	~Chamber();
+
+	bool hasExitNorth();
+	bool hasExitEast();
+	bool hasExitSouth();
+	bool hasExitWest();
+
+	void setExitNorth();
+	void setExitEast();
+	void setExitSouth();
+	void setExitWest();
 
 private:
 	bool north, east, south, west;
+	int floorNumber;
+
 	int randomNumber(int min, int max);
 	void generateRandomChamber(int x, int y);
-	void generateRandomEnemy(int floor_number);
+	void generateRandomEnemy();
 };
 

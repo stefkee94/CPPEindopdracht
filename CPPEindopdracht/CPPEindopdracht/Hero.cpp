@@ -1,14 +1,8 @@
 #include "Hero.h"
-#include <iostream>
-#include <string>
-Hero::Hero(std::string name, int level, double current_hp, double max_hp, double attack, double defense, int notice, Inventory inventory)
-{
-	std::cout << name << std::endl;
-}
 
-
-Hero::~Hero()
+void Hero::Hit()
 {
+
 }
 
 void Hero::Attack()
@@ -16,7 +10,34 @@ void Hero::Attack()
 
 }
 
-void Hero::Hit()
+#pragma region gettersAndSetters
+int Hero::getXPos()
 {
+	return xPos;
+}
 
+int Hero::getYPos()
+{
+	return yPos;
+}
+
+void Hero::setXPos(int x)
+{
+	xPos = x;
+}
+
+void Hero::setYPos(int y)
+{
+	yPos = y;
+}
+#pragma endregion gettersAndSetters
+
+Hero::Hero(std::string name, int level, double current_hp, double max_hp, double attack, double defense, int notice, Inventory inventory)
+{
+	xPos = 0;
+	yPos = 0;
+}
+
+Hero::~Hero()
+{
 }
