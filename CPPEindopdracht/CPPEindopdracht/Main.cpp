@@ -86,7 +86,10 @@ void Main::goTo(string exit)
 
 		map->setVisited(hero->getXPos(), hero->getYPos());
 
-		cout << "Welcome in the room to the " + exit + " of the previous room." << endl;
+		cout << "Welcome in the room to the " + exit + " of the previous room." << endl << endl;
+		if (map->hasEnemies(hero->getXPos(), hero->getYPos()))
+			map->printEnemies(hero->getXPos(), hero->getYPos());
+
 		printExits();
 	}
 	else

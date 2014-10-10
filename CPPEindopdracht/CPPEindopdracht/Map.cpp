@@ -111,6 +111,11 @@ bool Map::hasExit(int x, int y, string exit)
 	return false;
 }
 
+bool Map::hasEnemies(int x, int y)
+{
+	return chamberList[y][x].hasEnemies();
+}
+
 void Map::setVisited(int x, int y)
 {
 	chamberList[y][x].setVisited();
@@ -208,6 +213,11 @@ void Map::printMap(int curXPos, int curYPos)
 	}
 
 	cout << endl;
+}
+
+void Map::printEnemies(int x, int y)
+{
+	chamberList[y][x].printEnemies();
 }
 
 Map::Map(int horizontalSize, int verticalSize, int floor_number)

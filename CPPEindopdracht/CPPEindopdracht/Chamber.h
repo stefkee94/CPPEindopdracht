@@ -3,18 +3,23 @@
 #include "Map.h"
 #include "Enemy.h"
 
+#include <vector>
+
 class Chamber
 {
 public:
-	Chamber(int x, int y, int floor_number);
+	Chamber(int _x, int _y, int floor_number);
 	Chamber();
 	virtual ~Chamber();
+
+	void printEnemies();
 
 	bool hasExitNorth();
 	bool hasExitEast();
 	bool hasExitSouth();
 	bool hasExitWest();
 	bool isVisited();
+	bool hasEnemies();
 
 	void setExitNorth();
 	void setExitEast();
@@ -25,10 +30,16 @@ public:
 private:
 	bool north, east, south, west;
 	bool visited;
-	int floorNumber;
+	int floorNumber, x, y;
+
+	vector<Enemy*> enemies;
+	const int MAXENEMIES = 3;
 
 	int randomNumber(int min, int max);
-	void generateRandomChamber(int x, int y);
-	void generateRandomEnemy();
+	void generateRandomExits(int x, int y);
+	void generateRandomEnemies();
+	void generateRandomItems();
+	void generateRandomTraps();
+	void generate();
 };
 

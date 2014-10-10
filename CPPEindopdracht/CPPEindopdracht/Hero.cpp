@@ -51,7 +51,7 @@ Hero::Hero()
 	//Start values
 	name = "The one";
 	level = 1;
-	current_hp = max_hp = 10;
+	currentHp = maxHp = 10;
 	experience = 0;
 	attack = 2;
 	defense = 1;

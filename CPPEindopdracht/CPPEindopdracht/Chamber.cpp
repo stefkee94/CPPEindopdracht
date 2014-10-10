@@ -5,7 +5,7 @@ int Chamber::randomNumber(int min, int max)
 	return min + (rand() % (int)(max - min + 1));
 }
 
-void Chamber::generateRandomChamber(int x, int y)
+void Chamber::generateRandomExits(int x, int y)
 {
 	int numberOfExits = 1;
 	//Standard all the exits are false
@@ -299,25 +299,38 @@ void Chamber::generateRandomChamber(int x, int y)
 	}
 }
 
-void Chamber::generateRandomEnemy()
+void Chamber::generateRandomEnemies()
 {
-	switch (floorNumber)
+	enemies.resize(randomNumber(0, MAXENEMIES));
+
+	for (unsigned int i = 0; i < enemies.size(); ++i)
 	{
-		case 5:
-			// implementation of enemy with floor_number 5
-			break;
-		case 4:
-			// same
-			break;
-		case 3:
-			break;
-		case 2:
-			break;
-		case 1:
-			break;
-		default:
-			break;
+		//TODO make random enemy
+		enemies.push_back(new Enemy(EnemyType::RAT, floorNumber));
 	}
+}
+
+void Chamber::generateRandomItems()
+{
+
+}
+
+void Chamber::generateRandomTraps()
+{
+
+}
+
+void Chamber::printEnemies()
+{
+	cout << endl << "Tegenstanders in de kamer:";
+
+	for (unsigned int i = 0; i < enemies.size(); ++i)
+	{
+		cout << endl;
+		cout << enemies[i]->getName();
+	}
+
+	cout << endl;
 }
 
 #pragma region gettersAndSetters
@@ -339,6 +352,13 @@ bool Chamber::hasExitSouth()
 bool Chamber::hasExitWest()
 {
 	return west;
+}
+
+bool Chamber::hasEnemies()
+{
+	if (enemies.size() > 0)
+		return true;
+	return false;
 }
 
 bool Chamber::isVisited()
@@ -372,12 +392,23 @@ void Chamber::setVisited()
 }
 #pragma endregion gettersAndSetters
 
-Chamber::Chamber(int x, int y, int floor_number)
+void Chamber::generate()
+{
+	generateRandomExits(x, y);
+	generateRandomEnemies();
+	generateRandomItems();
+	generateRandomTraps();
+}
+
+Chamber::Chamber(int _x, int _y, int floor_number)
 {
 	floorNumber = floor_number;
+	x = _x;
+	y = _y;
+
 	visited = false;
-	generateRandomChamber(x, y);
-	generateRandomEnemy();
+
+	generate();
 }
 
 Chamber::Chamber()
@@ -391,4 +422,8 @@ Chamber::Chamber()
 
 Chamber::~Chamber()
 {
+	for (unsigned int i = 0; i < enemies.size(); ++i)
+	{
+		delete enemies[i];
+	}
 }

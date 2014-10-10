@@ -61,6 +61,8 @@ ItemType Inventory::getItemType(string itemName)
 		return ItemType::BEER;
 	if (itemName == "potion")
 		return ItemType::POTION;
+
+	return ItemType::NOITEM;
 }
 
 Inventory::Inventory()

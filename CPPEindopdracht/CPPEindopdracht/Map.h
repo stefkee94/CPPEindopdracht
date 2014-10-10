@@ -23,9 +23,11 @@ public:
 
 	list<string> getExits(int x, int y);
 	bool hasExit(int x, int y, string exit);
+	bool hasEnemies(int x, int y);
 
 	void setVisited(int x, int y);
 	void printMap(int curXPos, int curYPos);
+	void printEnemies(int x, int y);
 
 private:
 	int randomNumber(int min, int max);

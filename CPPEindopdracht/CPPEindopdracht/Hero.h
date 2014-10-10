@@ -3,10 +3,7 @@
 #include "MapObject.h"
 #include "Inventory.h"
 
-#include <string>
 #include <iostream>
-
-using namespace std;
 
 class Hero : public MapObject
 {
@@ -23,14 +20,8 @@ public:
 	void setYPos(int y);
 
 private:
-	string name;
-	int level;
 	const int MAXLEVEL = 10;
-	int current_hp;
-	int max_hp;
 	int experience;
-	int attack;
-	int defense;
 	int notice;
 	Inventory inventory;
 

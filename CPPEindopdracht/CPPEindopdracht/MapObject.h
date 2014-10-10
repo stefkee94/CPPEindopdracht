@@ -2,19 +2,23 @@
 
 #include <string>
 
+using namespace std;
+
 class MapObject
 {
 public:
 	MapObject();
 	virtual ~MapObject();
 
+	string getName();
+
 protected:
-	std::string name;
+	string name;
 	int level;
-	double current_hp;
-	double max_hp;
-	double attack;
-	double defense;
+	int currentHp;
+	int maxHp;
+	int attack;
+	int defense;
 
 	virtual void Hit();
 	virtual void Attack();
