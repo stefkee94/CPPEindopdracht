@@ -13,7 +13,7 @@ class Main
 {
 public:
 	Main();
-	~Main();
+	virtual ~Main();
 
 private:
 	Map* map;
@@ -27,7 +27,9 @@ private:
 	void printCommands();
 	void printExits();
 	void printMap();
+	void printInventory();
 	void goTo(string exit);
+	void dropItem(string itemName);
 	void doCommand(string command);
 };
 

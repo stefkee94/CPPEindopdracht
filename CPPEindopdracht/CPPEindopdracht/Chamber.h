@@ -8,7 +8,7 @@ class Chamber
 public:
 	Chamber(int x, int y, int floor_number);
 	Chamber();
-	~Chamber();
+	virtual ~Chamber();
 
 	bool hasExitNorth();
 	bool hasExitEast();

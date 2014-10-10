@@ -1,11 +1,72 @@
 #include "Inventory.h"
 
-#include <vector>
-Inventory::Inventory(int total_space, std::vector<ItemType>)
+//Print the items in your inventory
+void Inventory::printInventory()
 {
+	cout << "Your inventory contains:" << endl;
 
+	for (int i = 0; i < TOTALSPACE; ++i)
+	{
+		if (items[i] == ItemType::GRENADE)
+			cout << "grenade" << endl;
+		if (items[i] == ItemType::SWORD)
+			cout << "sword" << endl;
+		if (items[i] == ItemType::BEER)
+			cout << "beer" << endl;
+		if (items[i] == ItemType::POTION)
+			cout << "potion" << endl;
+	}
 }
 
+//return if the item is added or if the inventory is full
+string Inventory::addItem(string itemName)
+{
+	ItemType item = getItemType(itemName);
+
+	for (int i = 0; i < TOTALSPACE; ++i)
+	{
+		if (items[i] == ItemType::NOITEM)
+		{
+			items[i] = item;
+			return "Item added to your inventory.";
+		}
+	}
+
+	return "Your inventory is full.";
+}
+
+string Inventory::dropItem(string itemName)
+{
+	ItemType item = getItemType(itemName);
+
+	for (int i = 0; i < TOTALSPACE; ++i)
+	{
+		if (items[i] == item)
+		{
+			items[i] = ItemType::NOITEM;
+			return "Item dropped.";
+		}
+	}
+
+	return "Item not found.";
+}
+
+ItemType Inventory::getItemType(string itemName)
+{
+	if (itemName == "grenade")
+		return ItemType::GRENADE;
+	if (itemName == "sword")
+		return ItemType::SWORD;
+	if (itemName == "beer")
+		return ItemType::BEER;
+	if (itemName == "potion")
+		return ItemType::POTION;
+}
+
+Inventory::Inventory()
+{
+	items.resize(TOTALSPACE);
+}
 
 Inventory::~Inventory()
 {

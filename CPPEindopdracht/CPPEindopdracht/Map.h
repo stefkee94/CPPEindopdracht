@@ -14,6 +14,9 @@ using namespace std;
 class Map
 {
 public:
+	Map(int horizontalSize, int verticalSize, int floorNumber);
+	virtual ~Map();
+
 	static int horizontalMapSize;
 	static int verticalMapSize;
 	vector<vector<Chamber>> chamberList;
@@ -23,9 +26,6 @@ public:
 
 	void setVisited(int x, int y);
 	void printMap(int curXPos, int curYPos);
-
-	Map(int horizontalSize, int verticalSize, int floorNumber);
-	~Map();
 
 private:
 	int randomNumber(int min, int max);

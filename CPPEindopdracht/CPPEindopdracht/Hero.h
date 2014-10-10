@@ -6,11 +6,16 @@
 #include <string>
 #include <iostream>
 
+using namespace std;
+
 class Hero : public MapObject
 {
 public:
-	Hero(std::string name, int level, double current_hp, double max_hp, double attack, double defense, int notice, Inventory inventory );
+	Hero();
 	virtual ~Hero();
+
+	void printInventory();
+	string dropItem(string itemName);
 
 	int getXPos();
 	int getYPos();
@@ -18,6 +23,17 @@ public:
 	void setYPos(int y);
 
 private:
+	string name;
+	int level;
+	const int MAXLEVEL = 10;
+	int current_hp;
+	int max_hp;
+	int experience;
+	int attack;
+	int defense;
+	int notice;
+	Inventory inventory;
+
 	int xPos;
 	int yPos;
 
