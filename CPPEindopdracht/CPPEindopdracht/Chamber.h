@@ -14,14 +14,17 @@ public:
 	bool hasExitEast();
 	bool hasExitSouth();
 	bool hasExitWest();
+	bool isVisited();
 
 	void setExitNorth();
 	void setExitEast();
 	void setExitSouth();
 	void setExitWest();
+	void setVisited();
 
 private:
 	bool north, east, south, west;
+	bool visited;
 	int floorNumber;
 
 	int randomNumber(int min, int max);

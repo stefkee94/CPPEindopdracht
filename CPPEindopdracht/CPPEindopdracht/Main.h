@@ -26,6 +26,7 @@ private:
 	bool checkCommand(string command);
 	void printCommands();
 	void printExits();
+	void printMap();
 	void goTo(string exit);
 	void doCommand(string command);
 };

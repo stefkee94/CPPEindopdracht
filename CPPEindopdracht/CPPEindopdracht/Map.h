@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <list>
+#include <iostream>
 
 class Chamber;
 
@@ -19,6 +20,10 @@ public:
 
 	list<string> getExits(int x, int y);
 	bool hasExit(int x, int y, string exit);
+
+	void setVisited(int x, int y);
+	void printMap(int curXPos, int curYPos);
+
 	Map(int horizontalSize, int verticalSize, int floorNumber);
 	~Map();
 

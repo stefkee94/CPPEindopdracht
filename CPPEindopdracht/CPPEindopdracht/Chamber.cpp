@@ -15,12 +15,12 @@ void Chamber::generateRandomChamber(int x, int y)
 	west = false;
 
 	//Max exits = 2 (corners)
-	if ((x == 0 && y == 0) || (x == 0 && y == Map::verticalMapSize) || (x == Map::horizontalMapSize && y == 0) || (x == Map::horizontalMapSize && y == Map::verticalMapSize))
+	if ((x == 0 && y == 0) || (x == 0 && y == (Map::verticalMapSize - 1)) || (x == (Map::horizontalMapSize - 1) && y == 0) || (x == (Map::horizontalMapSize - 1) && y == (Map::verticalMapSize - 1)))
 	{
 		numberOfExits = randomNumber(1, 2);
 	}
 	//Max exits = 3 (sides)
-	else if ((x > 0 && x < Map::horizontalMapSize && y == 0) || (y > 0 && y < Map::verticalMapSize && x == 0) || (y > 0 && y < Map::verticalMapSize && x == Map::horizontalMapSize) || (x > 0 && x < Map::horizontalMapSize && y == Map::verticalMapSize))
+	else if ((x > 0 && x < (Map::horizontalMapSize - 1) && y == 0) || (y > 0 && y < (Map::verticalMapSize - 1) && x == 0) || (y > 0 && y < (Map::verticalMapSize - 1) && x == (Map::horizontalMapSize - 1)) || (x > 0 && x < (Map::horizontalMapSize - 1) && y == (Map::verticalMapSize - 1)))
 	{
 		numberOfExits = randomNumber(1, 3);
 	}
@@ -56,7 +56,7 @@ void Chamber::generateRandomChamber(int x, int y)
 			}
 		}
 	}
-	else if (x == Map::horizontalMapSize && y == 0)
+	else if (x == (Map::horizontalMapSize - 1) && y == 0)
 	{
 		//if numberOfExits = 2 there is no choice
 		if (numberOfExits >= 2)
@@ -78,7 +78,7 @@ void Chamber::generateRandomChamber(int x, int y)
 			}
 		}
 	}
-	else if (x == Map::horizontalMapSize && y == Map::verticalMapSize)
+	else if (x == (Map::horizontalMapSize - 1) && y == (Map::verticalMapSize - 1))
 	{
 		//if numberOfExits = 2 there is no choice
 		if (numberOfExits >= 2)
@@ -100,7 +100,7 @@ void Chamber::generateRandomChamber(int x, int y)
 			}
 		}
 	}
-	else if (x == 0 && y == Map::verticalMapSize)
+	else if (x == 0 && y == (Map::verticalMapSize - 1))
 	{
 		//if numberOfExits = 2 there is no choice
 		if (numberOfExits >= 2)
@@ -126,7 +126,7 @@ void Chamber::generateRandomChamber(int x, int y)
 		Sides
 	*/
 	//Top side
-	else if (x > 0 && x < Map::horizontalMapSize && y == 0)
+	else if (x > 0 && x < (Map::horizontalMapSize - 1) && y == 0)
 	{
 		//if numberOfExits = 3 there is no choice
 		if (numberOfExits >= 3)
@@ -159,7 +159,7 @@ void Chamber::generateRandomChamber(int x, int y)
 		}
 	}
 	//west side
-	else if (y > 0 && y < Map::verticalMapSize && x == 0)
+	else if (y > 0 && y < (Map::verticalMapSize - 1) && x == 0)
 	{
 		//if numberOfExits = 3 there is no choice
 		if (numberOfExits >= 3)
@@ -192,7 +192,7 @@ void Chamber::generateRandomChamber(int x, int y)
 		}
 	}
 	//east side
-	else if (y > 0 && y < Map::verticalMapSize && x == Map::horizontalMapSize)
+	else if (y > 0 && y <(Map::verticalMapSize - 1) && x == (Map::horizontalMapSize - 1))
 	{
 		//if numberOfExits = 3 there is no choice
 		if (numberOfExits >= 3)
@@ -225,7 +225,7 @@ void Chamber::generateRandomChamber(int x, int y)
 		}
 	}
 	//bottom side
-	else if (x > 0 && x < Map::horizontalMapSize && y == Map::verticalMapSize)
+	else if (x > 0 && x < (Map::horizontalMapSize - 1) && y == (Map::verticalMapSize - 1))
 	{
 		//if numberOfExits = 3 there is no choice
 		if (numberOfExits >= 3)
@@ -320,7 +320,7 @@ void Chamber::generateRandomEnemy()
 	}
 }
 
-#pragma region exitGettersAndSetters
+#pragma region gettersAndSetters
 bool Chamber::hasExitNorth()
 {
 	return north;
@@ -339,6 +339,11 @@ bool Chamber::hasExitSouth()
 bool Chamber::hasExitWest()
 {
 	return west;
+}
+
+bool Chamber::isVisited()
+{
+	return visited;
 }
 
 void Chamber::setExitNorth()
@@ -360,11 +365,17 @@ void Chamber::setExitWest()
 {
 	west = true;
 }
-#pragma endregion exitGettersAndSetters
+
+void Chamber::setVisited()
+{
+	visited = true;
+}
+#pragma endregion gettersAndSetters
 
 Chamber::Chamber(int x, int y, int floor_number)
 {
 	floorNumber = floor_number;
+	visited = false;
 	generateRandomChamber(x, y);
 	generateRandomEnemy();
 }
@@ -375,6 +386,7 @@ Chamber::Chamber()
 	east = false;
 	south = false;
 	west = false;
+	visited = false;
 }
 
 Chamber::~Chamber()

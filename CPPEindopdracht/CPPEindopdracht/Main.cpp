@@ -1,8 +1,9 @@
 #include "Main.h"
 
+const int EXITS = 0, MAP = 1, GONORTH = 2, GOEAST = 3, GOSOUTH = 4, GOWEST = 5, QUIT = 6, SHOWCOMMANDS = 7;
 
-const int MAXCOMMANDS = 7;
-const string allCommands[MAXCOMMANDS] = { "exits", "go north", "go east", "go south", "go west", "quit", "?" };
+const int MAXCOMMANDS = 8;
+const string allCommands[MAXCOMMANDS] = { "exits", "map", "go north", "go east", "go south", "go west", "quit", "?" };
 
 bool Main::checkCommand(string command)
 {
@@ -57,6 +58,8 @@ void Main::goTo(string exit)
 		if (exit == "west")
 			hero->setXPos(hero->getXPos() - 1);
 
+		map->setVisited(hero->getXPos(), hero->getYPos());
+
 		cout << "Welcome in the room to the " + exit + " of the previous room." << endl;
 		printExits();
 	}
@@ -66,26 +69,36 @@ void Main::goTo(string exit)
 	}
 }
 
+void Main::printMap()
+{
+	map->printMap(hero->getXPos(), hero->getYPos());
+}
+
 void Main::doCommand(string command)
 {
 	//if command = exits
-	if (command == allCommands[0])
+	if (command == allCommands[EXITS])
 	{
 		printExits();
 	}
+	//if command = map
+	if (command == allCommands[MAP])
+	{
+		printMap();
+	}
 	//if command = go north || go east || go south || go west
-	if (command == allCommands[1] || command == allCommands[2] || command == allCommands[3] || command == allCommands[4])
+	if (command == allCommands[GONORTH] || command == allCommands[GOEAST] || command == allCommands[GOSOUTH] || command == allCommands[GOWEST])
 	{
 		string exit = command.substr(3);
 		goTo(exit);
 	}
 	//if command = quit
-	if (command == allCommands[5])
+	if (command == allCommands[QUIT])
 	{
 		exit(EXIT_SUCCESS);
 	}
 	//if command = ?
-	if (command == allCommands[6])
+	if (command == allCommands[SHOWCOMMANDS])
 	{
 		printCommands();
 	}
