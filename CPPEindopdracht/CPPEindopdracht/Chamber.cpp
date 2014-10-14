@@ -301,9 +301,9 @@ void Chamber::generateRandomExits(int x, int y)
 
 void Chamber::generateRandomEnemies()
 {
-	enemies.resize(randomNumber(0, MAXENEMIES));
+	int numberOfEnemies = randomNumber(0, MAXENEMIES);
 
-	for (unsigned int i = 0; i < enemies.size(); ++i)
+	for (int i = 0; i < numberOfEnemies; ++i)
 	{
 		//TODO make random enemy
 		enemies.push_back(new Enemy(EnemyType::RAT, floorNumber));
@@ -418,7 +418,75 @@ Chamber::Chamber()
 	south = false;
 	west = false;
 	visited = false;
+
+	x = -1;
+	y = -1;
+	floorNumber = -1;
 }
+
+Chamber::Chamber(const Chamber& other)
+{
+	north = other.north;
+	east = other.east;
+	south = other.south;
+	west = other.west;
+
+	visited = other.visited;
+
+	floorNumber = other.floorNumber;
+	x = other.x;
+	y = other.y;
+
+	for (Enemy* e : other.enemies)
+	{
+		Enemy* clone = new Enemy(*e);
+		enemies.push_back(clone);
+	}
+}
+
+//Chamber::Chamber(Chamber&& other)
+//{
+//
+//}
+
+Chamber& Chamber::operator=(const Chamber& other)
+{
+	if (this != &other)
+	{
+		for (Enemy* e : enemies)
+		{
+			delete e;
+		}
+		enemies.clear();
+
+		north = other.north;
+		east = other.east;
+		south = other.south;
+		west = other.west;
+
+		visited = other.visited;
+
+		floorNumber = other.floorNumber;
+		x = other.x;
+		y = other.y;
+
+		for (Enemy* e : other.enemies)
+		{
+			Enemy* clone = new Enemy(*e);
+			enemies.push_back(clone);
+		}
+	}
+	return *this;
+}
+
+//Chamber& Chamber::operator=(Chamber&& other)
+//{
+//	if (this != &other)
+//	{
+//		
+//	}
+//	return *this;
+//}
 
 Chamber::~Chamber()
 {

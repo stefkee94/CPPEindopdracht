@@ -10,6 +10,10 @@ class Chamber
 public:
 	Chamber(int _x, int _y, int floor_number);
 	Chamber();
+	Chamber(const Chamber& other);
+	//Chamber(Chamber&& other);
+	Chamber& operator=(const Chamber& other);
+	//Chamber& operator=(Chamber&& other);
 	virtual ~Chamber();
 
 	void printEnemies();
