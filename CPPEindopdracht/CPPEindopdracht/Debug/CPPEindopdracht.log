@@ -1,4 +1,4 @@
-﻿Build started 14-10-2014 13:36:14.
+﻿Build started 14-10-2014 15:52:18.
      1>Project "C:\Users\Fabian Claasen\GitHub\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Chamber.cpp
@@ -11,9 +11,10 @@
          Debug\Map.obj
          Debug\Chamber.obj
          Debug\MapObject.obj
+         LINK : C:\Users\Fabian Claasen\GitHub\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.exe not found or not built by the last incremental link; performing full link
          CPPEindopdracht.vcxproj -> C:\Users\Fabian Claasen\GitHub\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.exe
      1>Done Building Project "C:\Users\Fabian Claasen\GitHub\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.83
+Time Elapsed 00:00:03.21
