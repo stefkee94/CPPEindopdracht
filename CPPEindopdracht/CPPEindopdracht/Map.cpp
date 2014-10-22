@@ -24,7 +24,6 @@ void Map::generateRandomMap(int floor_number)
 			{
 				chamberList[y][x] = Chamber(x, y, floor_number);
 				chamberList[y][x].setVisited();
-				amountOfChambers = 1;
 				continue;
 			}
 
@@ -32,7 +31,6 @@ void Map::generateRandomMap(int floor_number)
 			if (rand >= 1)
 			{
 				chamberList[y][x] = Chamber(x, y, floor_number);
-				amountOfChambers++;
 			}
 		}
 	}
@@ -77,178 +75,137 @@ void Map::linkNeighbours()
 		}
 	}
 
+	setAmountOfChambers();
+}
+
+void Map::setAmountOfChambers()
+{
+	//A new loop to check how many chambers there are
+	for (int y = 0; y < verticalMapSize; y++)
+	{
+		for (int x = 0; x < horizontalMapSize; x++)
+		{
+			if (chamberList[y][x].hasExitEast() || chamberList[y][x].hasExitNorth() || chamberList[y][x].hasExitSouth() || chamberList[y][x].hasExitWest())
+				amountOfChambers++;
+		}
+	}
+
 	//Check if all the chambers are linked else link them (start check from start room)
 	linkAllChambers(0, 0);
 }
 
-void Map::linkAllChambers(int x, int y)
+void Map::markChambers(int x, int y)
 {
 	//keep marking untill amountOfChambers = 0 (all the rooms are marked and linked)
 	chamberList[y][x].setMarked();
 	amountOfChambers--;
 
 	//Check if there is an unmarked room to the south
-	if (y < verticalMapSize)
+	if (y < (verticalMapSize - 1))
 	{
-		if (!chamberList[(y + 1)][x].isMarked() && (chamberList[(y + 1)][x].hasExitEast() || chamberList[(y + 1)][x].hasExitNorth() || chamberList[(y + 1)][x].hasExitSouth() || chamberList[(y + 1)][x].hasExitWest()))
+		if (!chamberList[(y + 1)][x].isMarked() && chamberList[y][x].hasExitSouth() && chamberList[(y + 1)][x].hasExitNorth())
 		{
-			linkAllChambers(x, (y + 1));
+			markChambers(x, (y + 1));
 		}
 	}
-	//Else check if there is an unmarked room to the west
-	else if (x > 0)
+	//check if there is an unmarked room to the west
+	if (x > 0)
 	{
-		if (!chamberList[y][(x - 1)].isMarked() && (chamberList[y][(x - 1)].hasExitEast() || chamberList[y][(x - 1)].hasExitNorth() || chamberList[y][(x - 1)].hasExitSouth() || chamberList[y][(x - 1)].hasExitWest()))
+		if (!chamberList[y][(x - 1)].isMarked() && chamberList[y][x].hasExitWest() && chamberList[y][(x - 1)].hasExitEast())
 		{
-			linkAllChambers((x - 1), y);
+			markChambers((x - 1), y);
 		}
 	}
-	//Else check if there is an unmarked room to the north
-	else if (y > 0)
+	//check if there is an unmarked room to the north
+	if (y > 0)
 	{
-		if (!chamberList[(y - 1)][x].isMarked() && (chamberList[(y - 1)][x].hasExitEast() || chamberList[(y - 1)][x].hasExitNorth() || chamberList[(y - 1)][x].hasExitSouth() || chamberList[(y - 1)][x].hasExitWest()))
+		if (!chamberList[(y - 1)][x].isMarked() && chamberList[y][x].hasExitNorth() && chamberList[(y - 1)][x].hasExitSouth())
 		{
-			linkAllChambers(x, (y - 1));
+			markChambers(x, (y - 1));
 		}
 	}
-	//Else check if there is an unmarked room to the east
-	else if (x < horizontalMapSize)
+	//check if there is an unmarked room to the east
+	if (x < (horizontalMapSize - 1))
 	{
-		if (!chamberList[y][(x + 1)].isMarked() && (chamberList[y][(x + 1)].hasExitEast() || chamberList[y][(x + 1)].hasExitNorth() || chamberList[y][(x + 1)].hasExitSouth() || chamberList[y][(x + 1)].hasExitWest()))
+		if (!chamberList[y][(x + 1)].isMarked() && chamberList[y][x].hasExitEast() && chamberList[y][(x + 1)].hasExitWest())
 		{
-			linkAllChambers((x + 1), y);
+			markChambers((x + 1), y);
 		}
 	}
+}
 
-	//if amountOfChambers != 0 after the linking above, not all the chambers are linked so a new chamber has to be added
-	if (amountOfChambers != 0)
+void Map::linkAllChambers(int x, int y)
+{
+	markChambers(x, y);
+	bool doneRight = false;
+
+	//As long as amountOfchambers <= 0 there are still unlinked rooms, so continue linking
+	while (!(amountOfChambers <= 0))
 	{
-		bool newLinkingPossible = false;
-		bool newRoom = false;
-		bool doneRight = false;
-		//As long as it is not possible to make a new link continue adding a new chamber
-		while (!newLinkingPossible)
+		//Start looking to the right if there is room for a chamber add one
+		if (x < (horizontalMapSize - 1) && !doneRight)
 		{
-			//Start looking to the right if there is room for a chamber add one
-			if (x < horizontalMapSize && !doneRight)
-			{
-				if (x == (horizontalMapSize - 1))
-					doneRight = true;
+			if (x == (horizontalMapSize - 2))
+				doneRight = true;
 
-				if (chamberList[y][(x + 1)].isMarked())
-				{
-					x++;
-				}
-				else
-				{
-					x++;
-					chamberList[y][x].setExitWest();
-					newRoom = true;
-				}
+			if (chamberList[y][(x + 1)].isMarked())
+			{
+				x++;
 			}
-			//Else go back to x = 0
-			else if (x > 0)
+			else
 			{
-				if (chamberList[y][(x - 1)].isMarked())
-				{
-					x--;
-				}
-				else
-				{
-					x--;
-					chamberList[y][x].setExitEast();
-					newRoom = true;
-				}
-			}
-			//else go down
-			else if (y < verticalMapSize)
-			{
-				//if went 1 down try right again
-				doneRight = false;
-
-				if (chamberList[(y + 1)][x].isMarked())
-				{
-					y++;
-				}
-				else
-				{
-					y++;
-					chamberList[y][x].setExitNorth();
-					newRoom = true;
-				}
-			}
-			////if everything else failed try going up again
-			//else if (y > 0)
-			//{
-			//	if (chamberList[(y - 1)][x].isMarked())
-			//	{
-			//		y--;
-			//	}
-			//	else
-			//	{
-			//		y--;
-			//		newRoom = true;
-			//	}
-			//}
-
-			if (newRoom)
-			{
-				//check if the new chamber has any neighbours, if so start linking again from this new Chamber
-
-				//Check if there is an unmarked room to the south
-				if (y < verticalMapSize)
-				{
-					//also check if this room needs an exit to the south
-					if (chamberList[(y + 1)][x].hasExitNorth())
-					{
-						chamberList[y][x].setExitSouth();
-					}
-					if (!chamberList[(y + 1)][x].isMarked() && (chamberList[(y + 1)][x].hasExitEast() || chamberList[(y + 1)][x].hasExitNorth() || chamberList[(y + 1)][x].hasExitSouth() || chamberList[(y + 1)][x].hasExitWest()))
-					{
-						linkAllChambers(x, (y + 1));
-					}
-				}
-				//Else check if there is an unmarked room to the north
-				else if (y > 0)
-				{
-					//also check if this room needs an exit to the north
-					if (chamberList[(y - 1)][x].hasExitSouth())
-					{
-						chamberList[y][x].setExitNorth();
-					}
-					if (!chamberList[(y - 1)][x].isMarked() && (chamberList[(y - 1)][x].hasExitEast() || chamberList[(y - 1)][x].hasExitNorth() || chamberList[(y - 1)][x].hasExitSouth() || chamberList[(y - 1)][x].hasExitWest()))
-					{
-						linkAllChambers(x, (y - 1));
-					}
-				}
-				//Else check if there is an unmarked room to the West
-				else if (x > 0)
-				{
-					//also check if this room needs an exit to the West
-					if (chamberList[y][(x - 1)].hasExitEast())
-					{
-						chamberList[y][x].setExitWest();
-					}
-					if (!chamberList[y][(x - 1)].isMarked() && (chamberList[y][(x - 1)].hasExitEast() || chamberList[y][(x - 1)].hasExitNorth() || chamberList[y][(x - 1)].hasExitSouth() || chamberList[y][(x - 1)].hasExitWest()))
-					{
-						linkAllChambers((x - 1), y);
-					}
-				}
-				//Else check if there is an unmarked room to the East
-				else if (x < horizontalMapSize)
-				{
-					//also check if this room needs an exit to the East
-					if (chamberList[y][(x + 1)].hasExitWest())
-					{
-						chamberList[y][x].setExitEast();
-					}
-					if (!chamberList[y][(x + 1)].isMarked() && (chamberList[y][(x + 1)].hasExitEast() || chamberList[y][(x + 1)].hasExitNorth() || chamberList[y][(x + 1)].hasExitSouth() || chamberList[y][(x + 1)].hasExitWest()))
-					{
-						linkAllChambers((x + 1), y);
-					}
-				}
+				chamberList[y][x].setExitEast();
+				x++;
+				chamberList[y][x].setExitWest();
+				markChambers(x, y);
 			}
 		}
+		//Else go back to x = 0
+		else if (x > 0)
+		{
+			if (chamberList[y][(x - 1)].isMarked())
+			{
+				x--;
+			}
+			else
+			{
+				chamberList[y][x].setExitWest();
+				x--;
+				chamberList[y][x].setExitEast();
+				markChambers(x, y);
+			}
+		}
+		//else go down
+		else if (y < (verticalMapSize - 1))
+		{
+			//if went 1 down try right again
+			doneRight = false;
+
+			if (chamberList[(y + 1)][x].isMarked())
+			{
+				y++;
+			}
+			else
+			{
+				chamberList[y][x].setExitSouth();
+				y++;
+				chamberList[y][x].setExitNorth();
+				markChambers(x, y);
+			}
+		}
+		////if everything else failed try going up again
+		//else if (y > 0)
+		//{
+		//	if (chamberList[(y - 1)][x].isMarked())
+		//	{
+		//		y--;
+		//	}
+		//	else
+		//	{
+		//		y--;
+		//		newRoom = true;
+		//	}
+		//}
 	}
 }
 
@@ -348,8 +305,8 @@ void Map::printMap(int curXPos, int curYPos)
 			Chamber current = chamberList[y / 2][x];
 
 			//If the current chamber has any exits it is a room
-			//if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()) && current.isVisited())
-			if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()))
+			if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()) && current.isVisited())
+			//if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()))
 			{
 				//If the current has an exit to the south, on the next row there has to be shown a '|'
 				if (current.hasExitSouth())

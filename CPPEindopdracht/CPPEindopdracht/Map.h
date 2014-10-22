@@ -42,6 +42,8 @@ private:
 	int randomNumber(int min, int max);
 	void generateRandomMap(int floor_number);
 	void linkNeighbours();
+	void setAmountOfChambers();
+	void markChambers(int x, int y);
 	void linkAllChambers(int x, int y);
 };
 
