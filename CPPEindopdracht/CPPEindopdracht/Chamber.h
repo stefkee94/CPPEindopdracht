@@ -4,6 +4,7 @@
 #include "Enemy.h"
 
 #include <vector>
+#include <random>
 
 class Chamber
 {
@@ -17,23 +18,31 @@ public:
 	virtual ~Chamber();
 
 	void printEnemies();
+	void hitEnemy(string enemyName, int damage);
+	int enemyAttack(MapObject hero, int index);
 
 	bool hasExitNorth();
 	bool hasExitEast();
 	bool hasExitSouth();
 	bool hasExitWest();
 	bool isVisited();
+	bool isMarked();
 	bool hasEnemies();
+	bool hasEnemy(string name);
+	int getAmountOfEnemies();
+	Enemy& getEnemy(string name);
 
 	void setExitNorth();
 	void setExitEast();
 	void setExitSouth();
 	void setExitWest();
 	void setVisited();
+	void setMarked();
 
 private:
 	bool north, east, south, west;
 	bool visited;
+	bool marked;
 	int floorNumber, x, y;
 
 	vector<Enemy*> enemies;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <random>
 
 using namespace std;
 
@@ -11,6 +12,14 @@ public:
 	virtual ~MapObject();
 
 	string getName();
+	int getCurrentHp();
+	bool isDead();
+
+	virtual void Hit(int damage);
+	virtual int Attack(MapObject other);
+
+private:
+	int randomNumber(int min, int max);
 
 protected:
 	string name;
@@ -19,8 +28,6 @@ protected:
 	int maxHp;
 	int attack;
 	int defense;
-
-	virtual void Hit();
-	virtual void Attack();
+	const int MAXDEFENSE = 40;
 };
 

@@ -19,17 +19,29 @@ private:
 	Map* map;
 	Hero* hero;
 	bool playing;
+	bool inCombat;
 	int horizontal = 10;
 	int vertical = 10;
-	int floorNumber = 5;
+	int floorNumber = 1;
+	const int FINALFLOOR = 5;
+	string lastRoomDirection;
 
 	bool checkCommand(string command);
+
 	void printCommands();
 	void printExits();
 	void printMap();
 	void printInventory();
+	void printSkills();
+	void printEnemies();
+
+	void addSkills();
 	void goTo(string exit);
 	void dropItem(string itemName);
+	void useItem(string itemName);
+	void engage();
+	void attackEnemy(string enemyName);
+	void flee();
 	void doCommand(string command);
 };
 

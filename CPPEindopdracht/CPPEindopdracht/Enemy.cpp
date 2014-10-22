@@ -2,17 +2,10 @@
 
 int Enemy::randomNumber(int min, int max)
 {
-	return min + (rand() % (int)(max - min + 1));
-}
-
-void Enemy::Attack()
-{
-
-}
-
-void Enemy::Hit()
-{
-
+	random_device dev;
+	default_random_engine dre(dev());
+	uniform_int_distribution<int> dist(min, max);
+	return dist(dre);
 }
 
 string Enemy::getEnemyName(EnemyType type)
@@ -27,12 +20,21 @@ string Enemy::getEnemyName(EnemyType type)
 	return "Unknown enemy";
 }
 
-Enemy::Enemy(EnemyType eType, int floorNumber)
+int Enemy::getEnemyLevel()
+{
+	return level;
+}
+
+Enemy::Enemy(EnemyType eType, int floorNumber, int number)
 {
 	type = eType;
-	name = getEnemyName(type);
-	level = randomNumber(1 , floorNumber);
-	currentHp = maxHp = (10 * level);
+
+	std::ostringstream oss;
+	oss << getEnemyName(type) << number;
+	name = oss.str();
+
+	level = randomNumber(2 , 3) * floorNumber;
+	currentHp = maxHp = (5 * level);
 	attack = (2 * level);
 	defense = (1 * level);
 }

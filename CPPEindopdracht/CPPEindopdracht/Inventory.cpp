@@ -3,7 +3,7 @@
 //Print the items in your inventory
 void Inventory::printInventory()
 {
-	cout << "Your inventory contains:" << endl;
+	cout << endl << "Your inventory contains:" << endl;
 
 	for (int i = 0; i < TOTALSPACE; ++i)
 	{
@@ -16,6 +16,8 @@ void Inventory::printInventory()
 		if (items[i] == ItemType::POTION)
 			cout << "potion" << endl;
 	}
+
+	cout << endl;
 }
 
 //return if the item is added or if the inventory is full

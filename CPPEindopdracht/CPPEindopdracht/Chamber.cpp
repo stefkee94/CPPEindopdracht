@@ -2,7 +2,10 @@
 
 int Chamber::randomNumber(int min, int max)
 {
-	return min + (rand() % (int)(max - min + 1));
+	random_device dev;
+	default_random_engine dre(dev());
+	uniform_int_distribution<int> dist(min, max);
+	return dist(dre);
 }
 
 void Chamber::generateRandomExits(int x, int y)
@@ -306,7 +309,7 @@ void Chamber::generateRandomEnemies()
 	for (int i = 0; i < numberOfEnemies; ++i)
 	{
 		//TODO make random enemy
-		enemies.push_back(new Enemy(EnemyType::RAT, floorNumber));
+		enemies.push_back(new Enemy(EnemyType::RAT, floorNumber, i));
 	}
 }
 
@@ -327,10 +330,40 @@ void Chamber::printEnemies()
 	for (unsigned int i = 0; i < enemies.size(); ++i)
 	{
 		cout << endl;
-		cout << enemies[i]->getName();
+		cout << enemies[i]->getName() << " -> Level: " << enemies[i]->getEnemyLevel() << " -> HP: " << enemies[i]->getCurrentHp();
 	}
 
-	cout << endl;
+	cout << endl << endl;
+}
+
+void Chamber::hitEnemy(string enemyName, int damage)
+{
+	for (unsigned int i = 0; i < enemies.size(); ++i)
+	{
+		Enemy* e = enemies.at(i);
+
+		if (e->getName() == enemyName)
+		{
+			e->Hit(damage);
+			if (e->isDead())
+			{
+				enemies.erase(enemies.begin() + i);
+				cout << endl << e->getName() << " died" << endl;
+			}
+		}
+	}
+}
+
+int Chamber::enemyAttack(MapObject hero, int index)
+{
+	int damage = enemies.at(index)->Attack(hero);
+
+	if (damage > 0)
+		cout << enemies.at(index)->getName() << " succesfully hit you with " << damage << " damage" << endl;
+	else
+		cout << enemies.at(index)->getName() << " failed to hit you" << endl;
+
+	return damage;
 }
 
 #pragma region gettersAndSetters
@@ -361,9 +394,42 @@ bool Chamber::hasEnemies()
 	return false;
 }
 
+bool Chamber::hasEnemy(string name)
+{
+	for (Enemy* e : enemies)
+	{
+		if (e->getName() == name)
+			return true;
+	}
+	return false;
+}
+
+int Chamber::getAmountOfEnemies()
+{
+	return enemies.size();
+}
+
+Enemy& Chamber::getEnemy(string name)
+{
+	for (Enemy* e : enemies)
+	{
+		if (e->getName() == name)
+			return *e;
+	}
+
+	//This one is never called because first a check is done if the given enemyName exists
+	//(Just to remove warning)
+	return Enemy();
+}
+
 bool Chamber::isVisited()
 {
 	return visited;
+}
+
+bool Chamber::isMarked()
+{
+	return marked;
 }
 
 void Chamber::setExitNorth()
@@ -390,6 +456,11 @@ void Chamber::setVisited()
 {
 	visited = true;
 }
+
+void Chamber::setMarked()
+{
+	marked = true;
+}
 #pragma endregion gettersAndSetters
 
 void Chamber::generate()
@@ -407,6 +478,7 @@ Chamber::Chamber(int _x, int _y, int floor_number)
 	y = _y;
 
 	visited = false;
+	marked = false;
 
 	generate();
 }
@@ -418,6 +490,7 @@ Chamber::Chamber()
 	south = false;
 	west = false;
 	visited = false;
+	marked = false;
 
 	x = -1;
 	y = -1;

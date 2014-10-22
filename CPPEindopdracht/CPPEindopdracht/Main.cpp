@@ -1,28 +1,79 @@
 #include "Main.h"
 
-const int EXITS = 0, MAP = 1, QUIT = 2, SHOWCOMMANDS = 3, INVENTORY = 4;
+const int QUIT = 0, SHOWCOMMANDS = 1, INVENTORY = 2, ENEMIES = 3;
+const int USE = 0;
+const int EXITS = 0, MAP = 1, ENGAGE = 2, SKILLS = 3;
 const int GO = 0, DROP = 1;
+const int FLEE = 0;
+const int ATTACK = 0;
 
-const int MAXSINGLECOMMANDS = 5;
-const int MAXDOUBLECOMMANDS = 2;
+const int MAXSINGLECOMMANDSGENERAL = 4;
+const int MAXDOUBLECOMMANDSGENERAL = 1;
 
-const string singleCommands[MAXSINGLECOMMANDS] = { "exits", "map", "quit", "?", "inventory" };
-const string doubleCommands[MAXDOUBLECOMMANDS] = { "go", "drop" };
+const int MAXSINGLECOMMANDSROOM = 4;
+const int MAXDOUBLECOMMANDSROOM = 2;
+
+const int MAXSINGLECOMMANDSCOMBAT = 1;
+const int MAXDOUBLECOMMANDSCOMBAT = 1;
+
+const string singleCommandsGeneral[MAXSINGLECOMMANDSGENERAL] = { "quit", "?", "inventory", "enemies" };
+const string doubleCommandsGeneral[MAXDOUBLECOMMANDSGENERAL] = { "use" };
+
+const string singleCommandsRoom[MAXSINGLECOMMANDSROOM] = { "exits", "map", "engage", "skills" };
+const string doubleCommandsRoom[MAXDOUBLECOMMANDSROOM] = { "go", "drop" };
+
+const string singleCommandsCombat[MAXSINGLECOMMANDSCOMBAT] = { "flee" };
+const string doubleCommandsCombat[MAXDOUBLECOMMANDSCOMBAT] = { "attack" };
 
 bool Main::checkCommand(string command)
 {
-	for (int i = 0; i < MAXSINGLECOMMANDS; ++i)
+	for (int i = 0; i < MAXSINGLECOMMANDSGENERAL; ++i)
 	{
-		if (command == singleCommands[i])
+		if (command == singleCommandsGeneral[i])
 		{
 			return true;
 		}
 	}
 
-	for (int i = 0; i < MAXDOUBLECOMMANDS; ++i)
+	for (int i = 0; i < MAXDOUBLECOMMANDSGENERAL; ++i)
 	{
-		if (command.find(doubleCommands[i]) != string::npos) {
+		if (command.find(doubleCommandsGeneral[i]) != string::npos) {
 			return true;
+		}
+	}
+
+	if (!inCombat)
+	{
+		for (int i = 0; i < MAXSINGLECOMMANDSROOM; ++i)
+		{
+			if (command == singleCommandsRoom[i])
+			{
+				return true;
+			}
+		}
+
+		for (int i = 0; i < MAXDOUBLECOMMANDSROOM; ++i)
+		{
+			if (command.find(doubleCommandsRoom[i]) != string::npos) {
+				return true;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < MAXSINGLECOMMANDSCOMBAT; ++i)
+		{
+			if (command == singleCommandsCombat[i])
+			{
+				return true;
+			}
+		}
+
+		for (int i = 0; i < MAXDOUBLECOMMANDSCOMBAT; ++i)
+		{
+			if (command.find(doubleCommandsCombat[i]) != string::npos) {
+				return true;
+			}
 		}
 	}
 
@@ -31,22 +82,75 @@ bool Main::checkCommand(string command)
 
 void Main::printCommands()
 {
-	for (int i = 0; i < MAXSINGLECOMMANDS; i++)
+	cout << endl;
+
+	cout << "Single commands(general):" << endl;
+	for (int i = 0; i < MAXSINGLECOMMANDSGENERAL; i++)
 	{
-		cout << singleCommands[i] + ", ";
+		cout << singleCommandsGeneral[i] + ", ";
 	}
 
-	for (int i = 0; i < MAXDOUBLECOMMANDS; i++)
+	cout << endl << endl;
+
+	cout << "Double commands(general): (Requires an extra command)" << endl;
+	for (int i = 0; i < MAXDOUBLECOMMANDSGENERAL; i++)
 	{
-		if (i == (MAXDOUBLECOMMANDS - 1))
-			cout << doubleCommands[i] << endl;
+		if (i == (MAXDOUBLECOMMANDSGENERAL - 1))
+			cout << doubleCommandsGeneral[i] << endl;
 		else
-			cout << doubleCommands[i] + ", ";
+			cout << doubleCommandsGeneral[i] + ", ";
 	}
+
+	if (!inCombat)
+	{
+		cout << endl;
+
+		cout << "Single commands(room):" << endl;
+		for (int i = 0; i < MAXSINGLECOMMANDSROOM; i++)
+		{
+			cout << singleCommandsRoom[i] + ", ";
+		}
+
+		cout << endl << endl;
+
+		cout << "Double commands(room): (Requires an extra command)" << endl;
+		for (int i = 0; i < MAXDOUBLECOMMANDSROOM; i++)
+		{
+			if (i == (MAXDOUBLECOMMANDSROOM - 1))
+				cout << doubleCommandsRoom[i] << endl;
+			else
+				cout << doubleCommandsRoom[i] + ", ";
+		}
+	}
+	else
+	{
+		cout << endl;
+
+		cout << "Single commands(combat):" << endl;
+		for (int i = 0; i < MAXSINGLECOMMANDSCOMBAT; i++)
+		{
+			cout << singleCommandsCombat[i] + ", ";
+		}
+
+		cout << endl << endl;
+
+		cout << "Double commands(combat): (Requires an extra command)" << endl;
+		for (int i = 0; i < MAXDOUBLECOMMANDSCOMBAT; i++)
+		{
+			if (i == (MAXDOUBLECOMMANDSCOMBAT - 1))
+				cout << doubleCommandsCombat[i] << endl;
+			else
+				cout << doubleCommandsCombat[i] + ", ";
+		}
+	}
+
+	cout << endl;
 }
 
 void Main::printExits()
 {
+	printEnemies();
+
 	list<string> exits = map->getExits(hero->getXPos(), hero->getYPos());
 	list<string>::iterator it;
 
@@ -59,6 +163,8 @@ void Main::printExits()
 		else
 			cout << *it + ", ";
 	}
+
+	cout << endl;
 }
 
 void Main::printMap()
@@ -71,24 +177,75 @@ void Main::printInventory()
 	hero->printInventory();
 }
 
+void Main::printSkills()
+{
+	//TODO
+}
+
+void Main::printEnemies()
+{
+	if (map->hasEnemies(hero->getXPos(), hero->getYPos()))
+		map->printEnemies(hero->getXPos(), hero->getYPos());
+	else
+		cout << endl << "There are no enemies in this room" << endl << endl;
+}
+
+void Main::addSkills()
+{
+	int skillPoints = 3;
+
+	cout << endl << "Congratulations you just leveled up to level: " << hero->getLevel() << endl;
+	cout << endl << "You have 3 skill points to spend" << endl;
+
+	while (skillPoints != 0)
+	{
+		string input;
+		cout << endl << "Type a skill to add a point to (attack, defense, notice, hp)" << endl;
+		cin >> input;
+
+		if (input == "attack")
+			hero->addAttack();
+		else if (input == "defense")
+			hero->addDefense();
+		else if (input == "notice")
+			hero->addNotice();
+		else if (input == "hp")
+			hero->addHp();
+		else
+			continue;
+
+		skillPoints--;
+	}
+}
+
 void Main::goTo(string exit)
 {
 	if (map->hasExit(hero->getXPos(), hero->getYPos(), exit))
 	{
 		if (exit == "north")
+		{
 			hero->setYPos(hero->getYPos() - 1);
+			lastRoomDirection = "south";
+		}
 		if (exit == "east")
+		{
 			hero->setXPos(hero->getXPos() + 1);
+			lastRoomDirection = "west";
+		}
 		if (exit == "south")
+		{
 			hero->setYPos(hero->getYPos() + 1);
+			lastRoomDirection = "north";
+		}
 		if (exit == "west")
+		{
 			hero->setXPos(hero->getXPos() - 1);
+			lastRoomDirection = "east";
+		}
 
 		map->setVisited(hero->getXPos(), hero->getYPos());
 
-		cout << "Welcome in the room to the " + exit + " of the previous room." << endl << endl;
-		if (map->hasEnemies(hero->getXPos(), hero->getYPos()))
-			map->printEnemies(hero->getXPos(), hero->getYPos());
+		cout << endl << "Welcome in the room to the " + exit + " of the previous room." << endl;
 
 		printExits();
 	}
@@ -100,65 +257,240 @@ void Main::goTo(string exit)
 
 void Main::dropItem(string itemName)
 {
+	cout << endl;
 	cout << hero->dropItem(itemName) << endl;
+	cout << endl;
+}
+
+void Main::useItem(string itemName)
+{
+	//TODO
+}
+
+void Main::engage()
+{
+	if (map->hasEnemies(hero->getXPos(), hero->getYPos()))
+	{
+		inCombat = true;
+		cout << "You are now in combat" << endl;
+	}
+	else
+		cout << "There are no enemies to engage" << endl;
+
+	cout << endl;
+}
+
+void Main::attackEnemy(string enemyName)
+{
+	cout << endl;
+
+	int x = hero->getXPos();
+	int y = hero->getYPos();
+	if (map->hasEnemy(x, y, enemyName))
+	{
+		Enemy e = map->getEnemy(x, y, enemyName);
+		int damage = hero->Attack(e);
+
+		if (damage > 0)
+			cout << "You succesfully hit the enemy with " << damage << " damage" << endl;
+		else
+			cout << "You failed to hit the enemy" << endl;
+
+		if (damage >= e.getCurrentHp())
+		{
+			if (hero->addExperience(e.getEnemyLevel()))
+				addSkills();
+		}
+
+		map->hitEnemy(x, y, enemyName, damage);
+
+		cout << endl;
+
+		for (int i = 0; i < map->getAmountOfEnemies(x, y); ++i)
+		{
+			int damage = map->enemyAttack(x, y, *hero, i);
+			hero->Hit(damage);
+		}
+
+		cout << endl;
+
+		cout << "You have " << hero->getCurrentHp() << " HP left -> you have " << hero->getExp() << "/" << hero->getExpNeeded() << " experience" << endl;
+
+		if (hero->getCurrentHp() == 0)
+		{
+			cout << endl;
+			cout << "You are dead" << endl;
+			playing = false;
+		}
+	}
+	else
+	{
+		cout << "There is no enemy: " << enemyName << endl;
+	}
+
+	cout << endl;
+
+	if (!map->hasEnemies(x, y))
+	{
+		inCombat = false;
+	}
+}
+
+void Main::flee()
+{
+	cout << endl;
+
+	if (lastRoomDirection != "")
+	{
+		inCombat = false;
+		cout << "You succesfully fled from the battle" << endl;
+		goTo(lastRoomDirection);
+	}
+	else
+	{
+		cout << "You can't flee from this battle" << endl;
+	}
+
+	cout << endl;
 }
 
 void Main::doCommand(string command)
 {
-	//if command = exits
-	if (command == singleCommands[EXITS])
-	{
-		printExits();
-	}
-	//if command = map
-	if (command == singleCommands[MAP])
-	{
-		printMap();
-	}
+	/*
+	//First check the general commands
+	*/
 	//if command = quit
-	if (command == singleCommands[QUIT])
+	if (command == singleCommandsGeneral[QUIT])
 	{
 		exit(EXIT_SUCCESS);
+		return;
 	}
 	//if command = ?
-	if (command == singleCommands[SHOWCOMMANDS])
+	if (command == singleCommandsGeneral[SHOWCOMMANDS])
 	{
 		printCommands();
+		return;
 	}
 	//if command = inventory
-	if (command == singleCommands[INVENTORY])
+	if (command == singleCommandsGeneral[INVENTORY])
 	{
 		printInventory();
+		return;
+	}
+	//if command = enemies
+	if (command == singleCommandsGeneral[ENEMIES])
+	{
+		printEnemies();
+		return;
 	}
 
-	//if command contains 'go' get the exit
-	if (command.find(doubleCommands[GO]) != string::npos)
+	//if command contains 'use' get and use an item
+	if (command.find(doubleCommandsGeneral[USE]) != string::npos)
 	{
-		string exit;
+		string item;
 
 		if (command.size() > 3)
-			exit = command.substr(3);
+			item = command.substr(3);
 		else
-			exit = "";
+			item = "";
 
-		goTo(exit);
+		useItem(item);
+
+		return;
 	}
-	//if command contains 'drop' get the item name
-	if (command.find(doubleCommands[DROP]) != string::npos)
-	{
-		string itemName;
-		if (command.size() > 5)
-			itemName = command.substr(5);
-		else
-			itemName = "";
 
-		dropItem(itemName);
+	/*
+	//If not in combat check the room commands
+	*/
+	if (!inCombat)
+	{
+		//if command = exits
+		if (command == singleCommandsRoom[EXITS])
+		{
+			printExits();
+			return;
+		}
+		//if command = map
+		if (command == singleCommandsRoom[MAP])
+		{
+			printMap();
+			return;
+		}
+		//if command = engage
+		if (command == singleCommandsRoom[ENGAGE])
+		{
+			engage();
+			return;
+		}
+		//if command = skills
+		if (command == singleCommandsRoom[SKILLS])
+		{
+			printSkills();
+			return;
+		}
+
+		//if command contains 'go' get the exit
+		if (command.find(doubleCommandsRoom[GO]) != string::npos)
+		{
+			string exit;
+
+			if (command.size() > 3)
+				exit = command.substr(3);
+			else
+				exit = "";
+
+			goTo(exit);
+
+			return;
+		}
+		//if command contains 'drop' get the item name
+		if (command.find(doubleCommandsRoom[DROP]) != string::npos)
+		{
+			string itemName;
+			if (command.size() > 5)
+				itemName = command.substr(5);
+			else
+				itemName = "";
+
+			dropItem(itemName);
+
+			return;
+		}
+	}
+	/*
+	//Else if in combat check the combat commands
+	*/
+	else
+	{
+		//if command = flee
+		if (command == singleCommandsCombat[FLEE])
+		{
+			flee();
+			return;
+		}
+
+		//if command contains 'attack' get and attack the enemy
+		if (command.find(doubleCommandsCombat[ATTACK]) != string::npos)
+		{
+			string enemy;
+
+			if (command.size() > 7)
+				enemy = command.substr(7);
+			else
+				enemy = "";
+
+			attackEnemy(enemy);
+
+			return;
+		}
 	}
 }
 
 Main::Main()
 {
 	playing = false;
+	inCombat = false;
+	lastRoomDirection = "";
 	string command;
 
 	cout << "Welcome to this roquelike game! Please set the size of the map : " << endl;
@@ -169,8 +501,22 @@ Main::Main()
 		cout << "Horizontal : " << endl;
 		cin >> horizontal;
 
+		while (!cin) {
+			cout << "Invalid input, please enter a number" << endl;
+			cin.clear();
+			cin.ignore(256, '\n');
+			cin >> horizontal;
+		}
+
 		cout << "Vertical : " << endl;
 		cin >> vertical;
+
+		while (!cin) {
+			cout << "Invalid input, please enter a number" << endl;
+			cin.clear();
+			cin.ignore(256, '\n');
+			cin >> vertical;
+		}
 
 		if (horizontal >= 5 && vertical >= 5 && horizontal <= 20 && vertical <= 20)
 		{
@@ -205,6 +551,13 @@ Main::Main()
 				cout << "The command you entered: '" << command << "' is invalid! Try another command (see possible commands by typing '?'): " << endl;
 		}
 	}
+
+	string answer;
+	cout << "Would you like to play again?" << endl;
+	cin >> answer;
+
+	if (answer == "yes")
+		Main();
 }
 
 Main::~Main()
