@@ -323,6 +323,42 @@ void Chamber::generateRandomTraps()
 
 }
 
+void Chamber::generateStairs()
+{
+	//on floor 1 there is only a stairs up
+	if (floorNumber == 1)
+	{
+		if (y == (Map::verticalMapSize - 1))
+		{
+			stairsUp = true;
+			Map::mapAmountOfStairs++;
+		}
+	}
+	//on floor 5 (max) there is only a stairs down
+	else if (floorNumber == 5)
+	{
+		if (x == 0 && y == 0)
+		{
+			stairsDown = true;
+			Map::mapAmountOfStairs++;
+		}
+	}
+	else
+	{
+		if (x == 0 && y == 0)
+		{
+			stairsDown = true;
+			Map::mapAmountOfStairs++;
+		}
+
+		if (y == (Map::verticalMapSize - 1))
+		{
+			stairsUp = true;
+			Map::mapAmountOfStairs++;
+		}
+	}
+}
+
 void Chamber::printEnemies()
 {
 	cout << endl << "Tegenstanders in de kamer:";
@@ -432,6 +468,16 @@ bool Chamber::isMarked()
 	return marked;
 }
 
+bool Chamber::hasStairsDown()
+{
+	return stairsDown;
+}
+
+bool Chamber::hasStairsUp()
+{
+	return stairsUp;
+}
+
 void Chamber::setExitNorth()
 {
 	north = true;
@@ -469,6 +515,17 @@ void Chamber::generate()
 	generateRandomEnemies();
 	generateRandomItems();
 	generateRandomTraps();
+
+	//Check if there is already a stairs up and/ or down in the map
+	if (floorNumber == 1 || floorNumber == 5)
+	{
+		if (Map::mapAmountOfStairs == 0)
+			generateStairs();
+	}
+	else if (Map::mapAmountOfStairs <= 2)
+	{
+		generateStairs();
+	}
 }
 
 Chamber::Chamber(int _x, int _y, int floor_number)
@@ -479,6 +536,8 @@ Chamber::Chamber(int _x, int _y, int floor_number)
 
 	visited = false;
 	marked = false;
+	stairsUp = false;
+	stairsDown = false;
 
 	generate();
 }
@@ -491,6 +550,8 @@ Chamber::Chamber()
 	west = false;
 	visited = false;
 	marked = false;
+	stairsUp = false;
+	stairsDown = false;
 
 	x = -1;
 	y = -1;
@@ -505,6 +566,9 @@ Chamber::Chamber(const Chamber& other)
 	west = other.west;
 
 	visited = other.visited;
+	marked = other.marked;
+	stairsUp = other.stairsUp;
+	stairsDown = other.stairsDown;
 
 	floorNumber = other.floorNumber;
 	x = other.x;
@@ -538,6 +602,9 @@ Chamber& Chamber::operator=(const Chamber& other)
 		west = other.west;
 
 		visited = other.visited;
+		marked = other.marked;
+		stairsUp = other.stairsUp;
+		stairsDown = other.stairsDown;
 
 		floorNumber = other.floorNumber;
 		x = other.x;

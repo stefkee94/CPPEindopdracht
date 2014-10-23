@@ -2,6 +2,7 @@
 
 int Map::horizontalMapSize = 0;
 int Map::verticalMapSize = 0;
+int Map::mapAmountOfStairs = 0;
 
 int Map::randomNumber(int min, int max)
 {
@@ -305,8 +306,8 @@ void Map::printMap(int curXPos, int curYPos)
 			Chamber current = chamberList[y / 2][x];
 
 			//If the current chamber has any exits it is a room
-			if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()) && current.isVisited())
-			//if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()))
+			//if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()) && current.isVisited())
+			if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()))
 			{
 				//If the current has an exit to the south, on the next row there has to be shown a '|'
 				if (current.hasExitSouth())
@@ -341,6 +342,8 @@ void Map::printMap(int curXPos, int curYPos)
 							stringMap[y][(x - 1)] = "R-";
 						else if (stringMap[y][(x - 1)].find("P") != string::npos)
 							stringMap[y][(x - 1)] = "P-";
+						else if (stringMap[y][(x - 1)].find("L") != string::npos)
+							stringMap[y][(x - 1)] = "L-";
 						else
 							stringMap[y][(x - 1)] = " -";
 					}
@@ -356,7 +359,14 @@ void Map::printMap(int curXPos, int curYPos)
 					else
 						stringMap[y][x] = "P ";
 				}
-					
+				else if (current.hasStairsDown() || current.hasStairsUp())
+				{
+					//and if there is an exit to the east also print a '-'
+					if (current.hasExitEast())
+						stringMap[y][x] = "L-";
+					else
+						stringMap[y][x] = "L ";
+				}	
 				else
 				{
 					//and if there is an exit to the east also print a '-'
@@ -380,7 +390,7 @@ void Map::printMap(int curXPos, int curYPos)
 	}
 
 	//Print the legenda
-	cout << endl << "Legenda:" << endl << "R : Ruimte" << endl << ". : Niet bezocht" << endl << "P : Speler" << endl;
+	cout << endl << "Legenda:" << endl << "R : Ruimte" << endl << ". : Niet bezocht" << endl << "P : Speler" << endl << "L : Ladder" << endl;
 
 	//print the map
 	for (int y = 0; y < verticalMapSize * 2; ++y)

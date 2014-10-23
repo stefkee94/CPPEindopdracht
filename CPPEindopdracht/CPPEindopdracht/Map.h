@@ -21,6 +21,8 @@ public:
 
 	static int horizontalMapSize;
 	static int verticalMapSize;
+	static int mapAmountOfStairs;
+
 	vector<vector<Chamber>> chamberList;
 
 	list<string> getExits(int x, int y);

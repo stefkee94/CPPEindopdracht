@@ -27,6 +27,8 @@ public:
 	bool hasExitWest();
 	bool isVisited();
 	bool isMarked();
+	bool hasStairsUp();
+	bool hasStairsDown();
 	bool hasEnemies();
 	bool hasEnemy(string name);
 	int getAmountOfEnemies();
@@ -41,8 +43,7 @@ public:
 
 private:
 	bool north, east, south, west;
-	bool visited;
-	bool marked;
+	bool visited, marked, stairsUp, stairsDown;
 	int floorNumber, x, y;
 
 	vector<Enemy*> enemies;
@@ -53,6 +54,7 @@ private:
 	void generateRandomEnemies();
 	void generateRandomItems();
 	void generateRandomTraps();
+	void generateStairs();
 	void generate();
 };
 
