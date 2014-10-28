@@ -25,6 +25,7 @@ private:
 	int floorNumber = 1;
 	const int FINALFLOOR = 5;
 	string lastRoomDirection;
+	vector<Map*> floors;
 
 	bool checkCommand(string command);
 
@@ -34,6 +35,7 @@ private:
 	void printInventory();
 	void printSkills();
 	void printEnemies();
+	void climbStairs();
 
 	void addSkills();
 	void goTo(string exit);

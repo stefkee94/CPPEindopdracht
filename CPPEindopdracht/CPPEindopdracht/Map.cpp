@@ -12,6 +12,7 @@ int Map::randomNumber(int min, int max)
 	return dist(dre);
 }
 
+#pragma region MapGeneratingMethods
 void Map::generateRandomMap(int floor_number)
 {
 	for (int y = 0; y < verticalMapSize; ++y)
@@ -209,6 +210,7 @@ void Map::linkAllChambers(int x, int y)
 		//}
 	}
 }
+#pragma endregion MapGeneratingMethods
 
 //Get all the exits from a chamber
 list<string> Map::getExits(int x, int y)
@@ -261,6 +263,16 @@ bool Map::hasEnemies(int x, int y)
 bool Map::hasEnemy(int x, int y, string name)
 {
 	return chamberList[y][x].hasEnemy(name);
+}
+
+bool Map::hasStairsDown(int x, int y)
+{
+	return chamberList[y][x].hasStairsDown();
+}
+
+bool Map::hasStairsUp(int x, int y)
+{
+	return chamberList[y][x].hasStairsUp();
 }
 
 Enemy& Map::getEnemy(int x, int y, string name)

@@ -29,6 +29,8 @@ public:
 	bool hasExit(int x, int y, string exit);
 	bool hasEnemies(int x, int y);
 	bool hasEnemy(int x, int y, string name);
+	bool hasStairsDown(int x, int y);
+	bool hasStairsUp(int x, int y);
 	Enemy& getEnemy(int x, int y, string name);
 	int getAmountOfEnemies(int x, int y);
 

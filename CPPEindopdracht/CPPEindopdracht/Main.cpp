@@ -2,7 +2,7 @@
 
 const int QUIT = 0, SHOWCOMMANDS = 1, INVENTORY = 2, ENEMIES = 3;
 const int USE = 0;
-const int EXITS = 0, MAP = 1, ENGAGE = 2, SKILLS = 3;
+const int EXITS = 0, MAP = 1, ENGAGE = 2, SKILLS = 3, CLIMB = 4;
 const int GO = 0, DROP = 1;
 const int FLEE = 0;
 const int ATTACK = 0;
@@ -10,7 +10,7 @@ const int ATTACK = 0;
 const int MAXSINGLECOMMANDSGENERAL = 4;
 const int MAXDOUBLECOMMANDSGENERAL = 1;
 
-const int MAXSINGLECOMMANDSROOM = 4;
+const int MAXSINGLECOMMANDSROOM = 5;
 const int MAXDOUBLECOMMANDSROOM = 2;
 
 const int MAXSINGLECOMMANDSCOMBAT = 1;
@@ -19,7 +19,7 @@ const int MAXDOUBLECOMMANDSCOMBAT = 1;
 const string singleCommandsGeneral[MAXSINGLECOMMANDSGENERAL] = { "quit", "?", "inventory", "enemies" };
 const string doubleCommandsGeneral[MAXDOUBLECOMMANDSGENERAL] = { "use" };
 
-const string singleCommandsRoom[MAXSINGLECOMMANDSROOM] = { "exits", "map", "engage", "skills" };
+const string singleCommandsRoom[MAXSINGLECOMMANDSROOM] = { "exits", "map", "engage", "skills", "climb" };
 const string doubleCommandsRoom[MAXDOUBLECOMMANDSROOM] = { "go", "drop" };
 
 const string singleCommandsCombat[MAXSINGLECOMMANDSCOMBAT] = { "flee" };
@@ -87,7 +87,10 @@ void Main::printCommands()
 	cout << "Single commands(general):" << endl;
 	for (int i = 0; i < MAXSINGLECOMMANDSGENERAL; i++)
 	{
-		cout << singleCommandsGeneral[i] + ", ";
+		if (i == (MAXSINGLECOMMANDSGENERAL - 1))
+			cout << singleCommandsGeneral[i] << endl;
+		else
+			cout << singleCommandsGeneral[i] + ", ";
 	}
 
 	cout << endl << endl;
@@ -179,7 +182,7 @@ void Main::printInventory()
 
 void Main::printSkills()
 {
-	//TODO
+	hero->printSkills();
 }
 
 void Main::printEnemies()
@@ -188,6 +191,27 @@ void Main::printEnemies()
 		map->printEnemies(hero->getXPos(), hero->getYPos());
 	else
 		cout << endl << "There are no enemies in this room" << endl << endl;
+}
+
+void Main::climbStairs()
+{
+	if (map->hasStairsUp(hero->getXPos(), hero->getYPos()))
+	{
+		floorNumber++;
+		map = new Map(Map::horizontalMapSize, Map::verticalMapSize, floorNumber);
+		floors.push_back(map);
+		hero->setXPos(0);
+		hero->setYPos(0);
+	}
+	else if (map->hasStairsDown(hero->getXPos(), hero->getYPos()))
+	{
+		floorNumber--;
+		map = floors[(floorNumber - 1)];
+	}
+	else
+	{
+		cout << endl << "There are no stairs in this room" << endl << endl;
+	}
 }
 
 void Main::addSkills()
@@ -264,7 +288,7 @@ void Main::dropItem(string itemName)
 
 void Main::useItem(string itemName)
 {
-	//TODO
+	hero->useItem(itemName);
 }
 
 void Main::engage()
@@ -428,6 +452,12 @@ void Main::doCommand(string command)
 			printSkills();
 			return;
 		}
+		//if command = climb
+		if (command == singleCommandsRoom[CLIMB])
+		{
+			climbStairs();
+			return;
+		}
 
 		//if command contains 'go' get the exit
 		if (command.find(doubleCommandsRoom[GO]) != string::npos)
@@ -530,6 +560,8 @@ Main::Main()
 
 	// Create new random Map
 	map = new Map(horizontal, vertical, floorNumber);
+
+	floors.push_back(map);
 
 	std::vector<ItemType> item_types;
 	// Create hero in the beginning

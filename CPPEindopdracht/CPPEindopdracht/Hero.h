@@ -12,8 +12,10 @@ public:
 	virtual ~Hero();
 
 	void printInventory();
+	void printSkills();
 	bool addExperience(int addExperience);
 	string dropItem(string itemName);
+	void useItem(string itemName);
 
 	int getXPos();
 	int getYPos();
@@ -28,6 +30,8 @@ public:
 	void addDefense();
 	void addNotice();
 	void addHp();
+
+	void fillHp(int amount);
 
 private:
 	const int MAXLEVEL = 10;

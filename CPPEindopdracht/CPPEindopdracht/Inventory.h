@@ -17,10 +17,9 @@ public:
 	string addItem(string item);
 	string dropItem(string itemName);
 
+	ItemType getItemType(string itemName);
+
 private:
 	const int TOTALSPACE = 10;
 	vector<ItemType> items;
-
-	ItemType getItemType(string itemName);
 };
-
