@@ -33,9 +33,9 @@ Enemy::Enemy(EnemyType eType, int floorNumber, int number)
 	oss << getEnemyName(type) << number;
 	name = oss.str();
 
-	level = randomNumber(2 , 3) * floorNumber;
+	level = randomNumber(1 , 2) * floorNumber;
 	currentHp = maxHp = (5 * level);
-	attack = (2 * level);
+	attack = (1 * level);
 	defense = (1 * level);
 }
 

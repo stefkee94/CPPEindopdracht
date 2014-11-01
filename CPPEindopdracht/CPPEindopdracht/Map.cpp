@@ -260,6 +260,11 @@ bool Map::hasEnemies(int x, int y)
 	return chamberList[y][x].hasEnemies();
 }
 
+vector<Enemy*> Map::getAllEnemies(int x, int y)
+{
+	return chamberList[y][x].getAllEnemies();
+}
+
 bool Map::hasEnemy(int x, int y, string name)
 {
 	return chamberList[y][x].hasEnemy(name);
@@ -316,7 +321,11 @@ void Map::printMap(int curXPos, int curYPos)
 		for (int x = 0; x < horizontalMapSize; ++x)
 		{
 			Chamber current = chamberList[y / 2][x];
-
+			if (!current.isVisited())
+			{
+				stringMap[y][x] = ". ";
+				continue;
+			}
 			//If the current chamber has any exits it is a room
 			//if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()) && current.isVisited())
 			if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()))
@@ -359,7 +368,6 @@ void Map::printMap(int curXPos, int curYPos)
 						else
 							stringMap[y][(x - 1)] = " -";
 					}
-						
 				}
 
 				//Print a 'P' if the player is on this position else print a 'R'
@@ -389,7 +397,7 @@ void Map::printMap(int curXPos, int curYPos)
 				}
 			}
 			//Else the room has not been discovered yet
-			else
+			/*else
 			{
 				stringMap[y][x] = ". ";
 
@@ -397,7 +405,7 @@ void Map::printMap(int curXPos, int curYPos)
 					stringMap[(y + 1)][x] = "  ";
 				else
 					stringMap[(y + 1)][x] = " ";
-			}
+			}*/
 		}
 	}
 

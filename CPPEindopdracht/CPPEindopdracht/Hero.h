@@ -8,14 +8,16 @@
 class Hero : public MapObject
 {
 public:
-	Hero();
+	Hero(string hero_name, string start_item);
 	virtual ~Hero();
 
 	void printInventory();
 	void printSkills();
 	bool addExperience(int addExperience);
+
 	string dropItem(string itemName);
 	void useItem(string itemName);
+	void removeItemFromInventory(string itemName);
 
 	int getXPos();
 	int getYPos();
@@ -32,6 +34,7 @@ public:
 	void addHp();
 
 	void fillHp(int amount);
+	void equipSword(int extra_attack);
 
 private:
 	const int MAXLEVEL = 10;

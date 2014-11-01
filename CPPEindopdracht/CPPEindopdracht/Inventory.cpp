@@ -1,10 +1,17 @@
 #include "Inventory.h"
+#include <regex>
 
 //Print the items in your inventory
 void Inventory::printInventory()
 {
-	cout << endl << "Your inventory contains:" << endl;
+	if (checkIfInventoryIsEmpty())
+	{
+		cout << endl << "Your inventory is empty" << endl;
+		return;
+	}
 
+	cout << endl << "Your inventory contains:" << endl;
+	
 	for (int i = 0; i < TOTALSPACE; ++i)
 	{
 		if (items[i] == ItemType::GRENADE)
@@ -18,6 +25,19 @@ void Inventory::printInventory()
 	}
 
 	cout << endl;
+}
+
+bool Inventory::checkIfInventoryIsEmpty()
+{
+	bool temp_cond;
+	for (int i = 0; i < TOTALSPACE; ++i)
+	{
+		if (items[i] == ItemType::NOITEM)
+			temp_cond = true;
+		else
+			return false;
+	}
+	return temp_cond;
 }
 
 //return if the item is added or if the inventory is full
@@ -70,6 +90,10 @@ ItemType Inventory::getItemType(string itemName)
 Inventory::Inventory()
 {
 	items.resize(TOTALSPACE);
+	for (int i = 0; i < TOTALSPACE; ++i)
+	{
+		items[i] = ItemType::NOITEM;
+	}
 }
 
 Inventory::~Inventory()

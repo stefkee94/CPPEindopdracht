@@ -1,4 +1,5 @@
 #include "Main.h"
+#include <Windows.h>
 
 const int QUIT = 0, SHOWCOMMANDS = 1, INVENTORY = 2, ENEMIES = 3;
 const int USE = 0;
@@ -288,7 +289,29 @@ void Main::dropItem(string itemName)
 
 void Main::useItem(string itemName)
 {
-	hero->useItem(itemName);
+	if (itemName == "grenade" || itemName == "bomb")
+	{
+		if (inCombat)
+		{
+			int damage = (itemName == "grenade") ? 5 : 7;
+			hero->useItem(itemName);
+			cout << "You pulled the pin out of the grenade and threw it to some enemies";
+			cout << endl << "3....." << endl;
+			Sleep(1000);
+			cout << endl << "2....." << endl;
+			Sleep(1000);
+			cout << endl << "1....." << endl;
+			Sleep(1000);
+			cout << endl << "BOOOOMM" << endl;
+			attackEnemyWithGrenade(damage);
+		}
+		else 
+		{
+			cout << "You have to be in combat to use your grenade, go in combat with the command : engage" << endl;
+		}
+	}
+	else
+		hero->useItem(itemName);
 }
 
 void Main::engage()
@@ -360,6 +383,31 @@ void Main::attackEnemy(string enemyName)
 	}
 }
 
+void Main::attackEnemyWithGrenade(int damage)
+{
+	cout << endl;
+
+	int x = hero->getXPos();
+	int y = hero->getYPos();
+	if (map->hasEnemies(x, y))
+	{
+		vector<Enemy*> enemies_in_chamber = map->getAllEnemies(x, y);
+		for (int i = 0; i < enemies_in_chamber.size(); i++)
+		{
+			if (damage > 0)
+				cout << "You succesfully hit enemy " << enemies_in_chamber[i]->getName() << " with damage of " << damage << endl;
+
+			if (damage >= enemies_in_chamber[i]->getCurrentHp())
+			{
+				if (hero->addExperience(enemies_in_chamber[i]->getEnemyLevel()))
+					addSkills();
+			}
+			map->hitEnemy(x, y, enemies_in_chamber[i]->getName(), damage);
+		}
+		cout << "You have " << hero->getCurrentHp() << " HP left -> you have " << hero->getExp() << "/" << hero->getExpNeeded() << " experience" << endl;
+	}
+}
+
 void Main::flee()
 {
 	cout << endl;
@@ -414,7 +462,7 @@ void Main::doCommand(string command)
 		string item;
 
 		if (command.size() > 3)
-			item = command.substr(3);
+			item = command.substr(4);
 		else
 			item = "";
 
@@ -558,14 +606,51 @@ Main::Main()
 		}
 	}
 
+	cout << "\n";
+
+	while (!hero_name_set)
+	{
+		cout << "Before we start on this adventure, what's your name?" << endl;
+		cin >> hero_name;
+		if (hero_name.size() > 25)
+			cout << "Name has to contain 25 chars or less" << endl;
+		else
+		{
+
+			cout << "\n" << "Welcome : " << hero_name << endl << "\n";
+			hero_name_set = true;
+		}
+	}
+
+	while (!start_item_selected)
+	{
+		cout << "Choose one item to start with, you can choose the following items to add in your inventory : " << endl << "\n";
+		std::vector<string> items = printAvailableItems();
+		cout << "\n";
+		cin >> start_item;
+
+		for (int j = 0; j < items.size(); j++)
+		{
+			if (start_item == items[j])
+			{
+				start_item_selected = true;
+				cout << "\n" << "You selected the item : " << start_item << " to start your adventure with" << endl << "\n";
+			}
+		}
+		if (start_item_selected == false)
+			cout << "\n" << "Your selected item : " << start_item << " is not known, please select a known item to start with" << endl << "\n";
+
+	}
+
 	// Create new random Map
 	map = new Map(horizontal, vertical, floorNumber);
 
 	floors.push_back(map);
 
 	std::vector<ItemType> item_types;
-	// Create hero in the beginning
-	hero = new Hero();
+
+	// Create hero in the beginning with name and one item
+	hero = new Hero(hero_name, start_item);
 
 	printExits();
 
@@ -590,6 +675,22 @@ Main::Main()
 
 	if (answer == "yes")
 		Main();
+}
+
+std::vector<string> Main::printAvailableItems()
+{
+	std::vector<string> string_item_types;
+	string_item_types.resize(static_cast<size_t>(ItemType::NOITEM));
+
+	string_item_types[static_cast<size_t>(ItemType::GRENADE)] = "grenade";
+	string_item_types[static_cast<size_t>(ItemType::BEER)] = "beer";
+	string_item_types[static_cast<size_t>(ItemType::POTION)] = "potion";
+	string_item_types[static_cast<size_t>(ItemType::SWORD)] = "sword";
+
+	for (int i = 0; i < string_item_types.size(); i++)
+		cout << string_item_types[i] << endl;
+
+	return string_item_types;
 }
 
 Main::~Main()

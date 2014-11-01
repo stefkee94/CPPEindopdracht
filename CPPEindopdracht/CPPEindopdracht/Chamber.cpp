@@ -458,6 +458,11 @@ Enemy& Chamber::getEnemy(string name)
 	return Enemy();
 }
 
+vector<Enemy*> Chamber::getAllEnemies()
+{
+	return enemies;
+}
+
 bool Chamber::isVisited()
 {
 	return visited;

@@ -14,6 +14,7 @@ public:
 	virtual ~Inventory();
 
 	void printInventory();
+	bool checkIfInventoryIsEmpty();
 	string addItem(string item);
 	string dropItem(string itemName);
 

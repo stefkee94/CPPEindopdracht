@@ -33,6 +33,7 @@ public:
 	bool hasEnemy(string name);
 	int getAmountOfEnemies();
 	Enemy& getEnemy(string name);
+	vector<Enemy*> getAllEnemies();
 
 	void setExitNorth();
 	void setExitEast();

@@ -49,15 +49,19 @@ void Hero::useItem(string itemName)
 			fillHp(5);
 			break;
 		case ItemType::GRENADE:
-			//TODO do damage
+			//DO NOTHING
 			break;
 		case ItemType::SWORD:
-			//TODO equip item
+			equipSword(2);
 			break;
 		default:
 			break;
 		}
+
+		//After item is used remove from inventory
+		removeItemFromInventory(itemName);
 	}
+	cout << itemName << " is not a valid item to use" << endl;
 }
 
 #pragma region gettersAndSetters
@@ -122,18 +126,38 @@ void Hero::addHp()
 
 void Hero::fillHp(int amount)
 {
-	currentHp += amount;
+	if (currentHp + amount >= maxHp)
+	{
+		amount = maxHp - currentHp;
+		currentHp = maxHp;
+	}
+	else
+		currentHp += amount;
+
+	cout << endl << "current Hp raised by " << amount << " current Hp is : " << currentHp << " and maximum Hp is : " << maxHp << endl;
 }
+
+void Hero::equipSword(int extra_attack)
+{
+	attack += extra_attack;
+	cout << endl << "You equipped your sword, your attack is gained by " << extra_attack << " and is now : " << attack << endl;
+}
+
+void Hero::removeItemFromInventory(string itemName)
+{
+	inventory.dropItem(itemName);
+}
+
 #pragma endregion gettersAndSetters
 
-Hero::Hero()
+Hero::Hero(string hero_name, string start_item)
 {
 	//Start position
 	xPos = 0;
 	yPos = 0;
 
 	//Start values
-	name = "The one";
+	name = hero_name;
 	level = 1;
 	currentHp = maxHp = 10;
 	experience = 0;
@@ -141,7 +165,7 @@ Hero::Hero()
 	defense = 2;
 	notice = 1;
 
-	inventory.addItem("beer");
+	inventory.addItem(start_item);
 }
 
 Hero::~Hero()

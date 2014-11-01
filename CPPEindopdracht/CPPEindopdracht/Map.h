@@ -39,6 +39,7 @@ public:
 	void setVisited(int x, int y);
 	void printMap(int curXPos, int curYPos);
 	void printEnemies(int x, int y);
+	vector<Enemy*> getAllEnemies(int x, int y);
 
 private:
 	int amountOfChambers;

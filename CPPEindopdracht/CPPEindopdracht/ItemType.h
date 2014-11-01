@@ -2,9 +2,9 @@
 
 enum class ItemType
 {
-	NOITEM,
 	GRENADE,
 	SWORD,
 	BEER,
 	POTION,
+	NOITEM,
 };
