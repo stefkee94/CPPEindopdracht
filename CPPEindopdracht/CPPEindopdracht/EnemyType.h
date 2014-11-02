@@ -2,8 +2,12 @@
 
 enum class EnemyType
 {
-	RAT,
+	RAT = 0,
 	DRAGON,
-	BOSS
+	MOUSE,
+	TURTLE,
+	CHICKEN,
+	BOSS,
+	NUM_TYPES
 };
 

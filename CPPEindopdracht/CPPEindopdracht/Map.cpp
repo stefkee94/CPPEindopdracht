@@ -320,6 +320,7 @@ void Map::printMap(int curXPos, int curYPos)
 	{
 		for (int x = 0; x < horizontalMapSize; ++x)
 		{
+			// TODO : Sometimes chambers are x -1 and y -1 ?? strange
 			Chamber current = chamberList[y / 2][x];
 			if (!current.isVisited())
 			{
@@ -397,15 +398,15 @@ void Map::printMap(int curXPos, int curYPos)
 				}
 			}
 			//Else the room has not been discovered yet
-			/*else
+			else
 			{
 				stringMap[y][x] = ". ";
 
 				if (x != 0)
-					stringMap[(y + 1)][x] = "  ";
+					stringMap[(y + 1)][x] = ".";
 				else
-					stringMap[(y + 1)][x] = " ";
-			}*/
+					stringMap[(y + 1)][x] = ".";
+			}
 		}
 	}
 

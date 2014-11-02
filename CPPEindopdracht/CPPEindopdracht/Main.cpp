@@ -220,9 +220,9 @@ void Main::addSkills()
 	int skillPoints = 3;
 
 	cout << endl << "Congratulations you just leveled up to level: " << hero->getLevel() << endl;
-	cout << endl << "You have 3 skill points to spend" << endl;
+	cout << endl << "You have " << skillPoints << " skill points to spend" << endl;
 
-	while (skillPoints != 0)
+	while (skillPoints > 0)
 	{
 		string input;
 		cout << endl << "Type a skill to add a point to (attack, defense, notice, hp)" << endl;

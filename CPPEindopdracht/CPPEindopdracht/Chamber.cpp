@@ -309,7 +309,8 @@ void Chamber::generateRandomEnemies()
 	for (int i = 0; i < numberOfEnemies; ++i)
 	{
 		//TODO make random enemy
-		enemies.push_back(new Enemy(EnemyType::RAT, floorNumber, i));
+		EnemyType randEnemy = EnemyType(rand() % 4);
+		enemies.push_back(new Enemy(randEnemy, floorNumber, i));
 	}
 }
 

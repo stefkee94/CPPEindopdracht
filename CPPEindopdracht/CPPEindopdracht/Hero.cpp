@@ -61,7 +61,8 @@ void Hero::useItem(string itemName)
 		//After item is used remove from inventory
 		removeItemFromInventory(itemName);
 	}
-	cout << itemName << " is not a valid item to use" << endl;
+	else
+		cout << itemName << " is not a valid item to use" << endl;
 }
 
 #pragma region gettersAndSetters
