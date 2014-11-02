@@ -320,13 +320,8 @@ void Map::printMap(int curXPos, int curYPos)
 	{
 		for (int x = 0; x < horizontalMapSize; ++x)
 		{
-			// TODO : Sometimes chambers are x -1 and y -1 ?? strange
 			Chamber current = chamberList[y / 2][x];
-			if (!current.isVisited())
-			{
-				stringMap[y][x] = ". ";
-				continue;
-			}
+
 			//If the current chamber has any exits it is a room
 			//if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()) && current.isVisited())
 			if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()))
@@ -360,7 +355,7 @@ void Map::printMap(int curXPos, int curYPos)
 				{
 					if (x != 0)
 					{
-						if (stringMap[y][(x - 1)].find("R") != string::npos) 
+						if (stringMap[y][(x - 1)].find("R") != string::npos)
 							stringMap[y][(x - 1)] = "R-";
 						else if (stringMap[y][(x - 1)].find("P") != string::npos)
 							stringMap[y][(x - 1)] = "P-";
@@ -369,6 +364,7 @@ void Map::printMap(int curXPos, int curYPos)
 						else
 							stringMap[y][(x - 1)] = " -";
 					}
+
 				}
 
 				//Print a 'P' if the player is on this position else print a 'R'
@@ -387,7 +383,7 @@ void Map::printMap(int curXPos, int curYPos)
 						stringMap[y][x] = "L-";
 					else
 						stringMap[y][x] = "L ";
-				}	
+				}
 				else
 				{
 					//and if there is an exit to the east also print a '-'
@@ -403,9 +399,9 @@ void Map::printMap(int curXPos, int curYPos)
 				stringMap[y][x] = ". ";
 
 				if (x != 0)
-					stringMap[(y + 1)][x] = ".";
+					stringMap[(y + 1)][x] = "  ";
 				else
-					stringMap[(y + 1)][x] = ".";
+					stringMap[(y + 1)][x] = " ";
 			}
 		}
 	}
@@ -426,7 +422,6 @@ void Map::printMap(int curXPos, int curYPos)
 
 	cout << endl;
 }
-
 void Map::printEnemies(int x, int y)
 {
 	chamberList[y][x].printEnemies();

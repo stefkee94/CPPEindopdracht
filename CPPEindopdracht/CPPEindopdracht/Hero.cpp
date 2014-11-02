@@ -48,9 +48,6 @@ void Hero::useItem(string itemName)
 		case ItemType::BEER: case ItemType::POTION:
 			fillHp(5);
 			break;
-		case ItemType::GRENADE:
-			//DO NOTHING
-			break;
 		case ItemType::SWORD:
 			equipSword(2);
 			break;

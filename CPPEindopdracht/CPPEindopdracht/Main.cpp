@@ -1,5 +1,4 @@
 #include "Main.h"
-#include <Windows.h>
 
 const int QUIT = 0, SHOWCOMMANDS = 1, INVENTORY = 2, ENEMIES = 3;
 const int USE = 0;

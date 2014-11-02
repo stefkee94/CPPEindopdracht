@@ -1,5 +1,4 @@
 #include "Inventory.h"
-#include <regex>
 
 //Print the items in your inventory
 void Inventory::printInventory()
