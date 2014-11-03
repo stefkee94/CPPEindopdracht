@@ -49,10 +49,12 @@ string Inventory::addItem(string itemName)
 		if (items[i] == ItemType::NOITEM)
 		{
 			items[i] = item;
-			return "Item added to your inventory.";
+			cout << "Item " << itemName << " added to your inventory." << endl;
+			return "Item " + itemName + " added to your inventory.";
 		}
 	}
 
+	cout << "Item " << itemName << " couldn't be added because the inventory is full" << endl;
 	return "Your inventory is full.";
 }
 

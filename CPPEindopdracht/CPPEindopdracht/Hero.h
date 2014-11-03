@@ -27,11 +27,14 @@ public:
 	int getExp();
 	int getExpNeeded();
 	int getLevel();
+	int getNotice();
 
 	void addAttack();
 	void addDefense();
 	void addNotice();
+	void addItem(string itemName);
 	void addHp();
+	void addCurrentHp(int amount);
 
 	void fillHp(int amount);
 	void equipSword(int extra_attack);

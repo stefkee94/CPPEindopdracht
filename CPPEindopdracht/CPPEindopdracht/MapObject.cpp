@@ -46,9 +46,15 @@ string MapObject::getName()
 {
 	return name;
 }
+
 int MapObject::getCurrentHp()
 {
 	return currentHp;
+}
+
+int MapObject::getMaxHp()
+{
+	return maxHp;
 }
 bool MapObject::isDead()
 {

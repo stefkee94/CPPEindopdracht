@@ -361,6 +361,8 @@ void Map::printMap(int curXPos, int curYPos)
 							stringMap[y][(x - 1)] = "P-";
 						else if (stringMap[y][(x - 1)].find("L") != string::npos)
 							stringMap[y][(x - 1)] = "L-";
+						else if (stringMap[y][(x - 1)].find("H") != string::npos)
+							stringMap[y][(x - 1)] = "H-";
 						else
 							stringMap[y][(x - 1)] = " -";
 					}
@@ -376,13 +378,20 @@ void Map::printMap(int curXPos, int curYPos)
 					else
 						stringMap[y][x] = "P ";
 				}
-				else if (current.hasStairsDown() || current.hasStairsUp())
+				else if (current.hasStairsDown())
 				{
 					//and if there is an exit to the east also print a '-'
 					if (current.hasExitEast())
 						stringMap[y][x] = "L-";
 					else
 						stringMap[y][x] = "L ";
+				}
+				else if (current.hasStairsUp())
+				{
+					if (current.hasExitEast())
+						stringMap[y][x] = "H-";
+					else
+						stringMap[y][x] = "H ";
 				}
 				else
 				{
@@ -407,7 +416,7 @@ void Map::printMap(int curXPos, int curYPos)
 	}
 
 	//Print the legenda
-	cout << endl << "Legenda:" << endl << "R : Ruimte" << endl << ". : Niet bezocht" << endl << "P : Speler" << endl << "L : Ladder" << endl;
+	cout << endl << "Legenda:" << endl << "R : Ruimte" << endl << ". : Niet bezocht" << endl << "P : Speler" << endl << "L : Ladder omlaag" << endl << "H : Ladder omhoog" << endl;
 
 	//print the map
 	for (int y = 0; y < verticalMapSize * 2; ++y)

@@ -1,5 +1,13 @@
 #include "Chamber.h"
 
+const int SIZES = 3;
+const int CLEANORDIRTY = 2;
+const int SIZEOFFURNITURE = 3;
+
+const string SIZEOFCHAMBER[SIZES] = { "big", "average", "small" };
+const string CLEANORDIRTYCHAMBER[CLEANORDIRTY] = { "clean", "dirty" };
+const string FURNITURE[SIZEOFFURNITURE] = { "table", "bed", "empty" };
+
 int Chamber::randomNumber(int min, int max)
 {
 	random_device dev;
@@ -316,12 +324,71 @@ void Chamber::generateRandomEnemies()
 
 void Chamber::generateRandomItems()
 {
-
+	bool ItemAvailable = rand() % 2 == 1;
+	
+	if (ItemAvailable)
+	{
+		//Add one or more items in chamber
+		// maximum 3 items in one room random
+		item_types.resize(randomNumber(0, 3));
+		for (int i = 0; i < item_types.size(); ++i)
+		{
+			string value;
+			ItemType type = static_cast<ItemType>(rand() % (int)ItemType::NOITEM);
+			switch (type)
+			{
+			case ItemType::BEER:
+				value = "beer";
+				break;
+			case ItemType::GRENADE:
+				value = "grenade";
+				break;
+			case ItemType::POTION:
+				value = "potion";
+				break;
+			case ItemType::SWORD:
+				value = "sword";
+			}
+			// set value of item type
+			item_types[i] = value;
+		}
+	}
 }
 
 void Chamber::generateRandomTraps()
 {
 
+}
+
+string Chamber::generateRandomDescription()
+{
+	string sizeOfChamber = SIZEOFCHAMBER[randomNumber(0, SIZES-1)];
+	string cleanOrDirtyChamber = CLEANORDIRTYCHAMBER[randomNumber(0, CLEANORDIRTY-1)];
+	string furnitureInChamber = FURNITURE[randomNumber(0, SIZEOFFURNITURE-1)];
+
+	// set description for the size
+	if (sizeOfChamber == "big")
+		description = "It is a big room";
+	else if (sizeOfChamber == "average")
+		description = "It is an average room";
+	else if (sizeOfChamber == "small")
+		description = "It is a small room";
+
+	// further with description clean or dirty room
+	if (cleanOrDirtyChamber == "clean")
+		description += " which is very clean";
+	else if (cleanOrDirtyChamber == "dirty")
+		description += " which is very dirty";
+
+	//last one, furniture in the room
+	if (furnitureInChamber == "table")
+		description += " with a table and four chairs";
+	else if (furnitureInChamber == "bed")
+		description += " with a bed in the corner";
+	else if (furnitureInChamber == "empty")
+		description += " and totally empty";
+
+	return description;
 }
 
 void Chamber::generateStairs()
@@ -459,6 +526,16 @@ Enemy& Chamber::getEnemy(string name)
 	return Enemy();
 }
 
+string Chamber::getDescription()
+{
+	return description;
+}
+
+vector<string> Chamber::getItemTypes()
+{
+	return item_types;
+}
+
 vector<Enemy*> Chamber::getAllEnemies()
 {
 	return enemies;
@@ -521,6 +598,7 @@ void Chamber::generate()
 	generateRandomEnemies();
 	generateRandomItems();
 	generateRandomTraps();
+	generateRandomDescription();
 
 	//Check if there is already a stairs up and/ or down in the map
 	if (floorNumber == 1 || floorNumber == 5)
@@ -539,7 +617,7 @@ Chamber::Chamber(int _x, int _y, int floor_number)
 	floorNumber = floor_number;
 	x = _x;
 	y = _y;
-
+	description = 
 	visited = false;
 	marked = false;
 	stairsUp = false;
@@ -575,7 +653,8 @@ Chamber::Chamber(const Chamber& other)
 	marked = other.marked;
 	stairsUp = other.stairsUp;
 	stairsDown = other.stairsDown;
-
+	description = other.description;
+	item_types = other.item_types;
 	floorNumber = other.floorNumber;
 	x = other.x;
 	y = other.y;
@@ -611,6 +690,8 @@ Chamber& Chamber::operator=(const Chamber& other)
 		marked = other.marked;
 		stairsUp = other.stairsUp;
 		stairsDown = other.stairsDown;
+		item_types = other.item_types;
+		description = other.description;
 
 		floorNumber = other.floorNumber;
 		x = other.x;

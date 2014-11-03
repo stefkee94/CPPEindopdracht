@@ -13,6 +13,7 @@ public:
 
 	string getName();
 	int getCurrentHp();
+	int getMaxHp();
 	bool isDead();
 
 	virtual void Hit(int damage);

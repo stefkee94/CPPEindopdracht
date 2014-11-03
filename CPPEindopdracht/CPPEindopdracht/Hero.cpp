@@ -122,6 +122,32 @@ void Hero::addHp()
 	cout << endl << "Hp raised by 5 -> current Hp: " << maxHp << endl;
 }
 
+void Hero::addCurrentHp(int amount)
+{
+	if (getCurrentHp() == getMaxHp())
+	{
+		cout << "Rest is not needed because hp is full" << endl;
+		return;
+	}
+	else if ((getCurrentHp() + amount) > getMaxHp())
+	{
+		amount = getMaxHp() - getCurrentHp();
+	}
+
+	currentHp += amount;
+	cout << getName() << " took some rest, the Hp is healed by " << amount << " and is now " << getCurrentHp() << " from a total of " << getMaxHp() << endl;
+}
+
+int Hero::getNotice()
+{
+	return notice;
+}
+
+void Hero::addItem(string itemName)
+{
+	inventory.addItem(itemName);
+}
+
 void Hero::fillHp(int amount)
 {
 	if (currentHp + amount >= maxHp)

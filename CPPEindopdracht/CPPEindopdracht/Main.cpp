@@ -2,16 +2,16 @@
 
 const int QUIT = 0, SHOWCOMMANDS = 1, INVENTORY = 2, ENEMIES = 3;
 const int USE = 0;
-const int EXITS = 0, MAP = 1, ENGAGE = 2, SKILLS = 3, CLIMB = 4;
-const int GO = 0, DROP = 1;
+const int EXITS = 0, MAP = 1, ENGAGE = 2, SKILLS = 3, REST = 4, NOTICE = 5;
+const int GO = 0, DROP = 1, CLIMB = 2, PICK = 3;
 const int FLEE = 0;
 const int ATTACK = 0;
 
 const int MAXSINGLECOMMANDSGENERAL = 4;
 const int MAXDOUBLECOMMANDSGENERAL = 1;
 
-const int MAXSINGLECOMMANDSROOM = 5;
-const int MAXDOUBLECOMMANDSROOM = 2;
+const int MAXSINGLECOMMANDSROOM = 6;
+const int MAXDOUBLECOMMANDSROOM = 4;
 
 const int MAXSINGLECOMMANDSCOMBAT = 1;
 const int MAXDOUBLECOMMANDSCOMBAT = 1;
@@ -19,8 +19,8 @@ const int MAXDOUBLECOMMANDSCOMBAT = 1;
 const string singleCommandsGeneral[MAXSINGLECOMMANDSGENERAL] = { "quit", "?", "inventory", "enemies" };
 const string doubleCommandsGeneral[MAXDOUBLECOMMANDSGENERAL] = { "use" };
 
-const string singleCommandsRoom[MAXSINGLECOMMANDSROOM] = { "exits", "map", "engage", "skills", "climb" };
-const string doubleCommandsRoom[MAXDOUBLECOMMANDSROOM] = { "go", "drop" };
+const string singleCommandsRoom[MAXSINGLECOMMANDSROOM] = { "exits", "map", "engage", "skills", "rest", "notice" };
+const string doubleCommandsRoom[MAXDOUBLECOMMANDSROOM] = { "go", "drop", "climb", "pick" };
 
 const string singleCommandsCombat[MAXSINGLECOMMANDSCOMBAT] = { "flee" };
 const string doubleCommandsCombat[MAXDOUBLECOMMANDSCOMBAT] = { "attack" };
@@ -152,6 +152,7 @@ void Main::printCommands()
 
 void Main::printExits()
 {
+	printRoomInformation();
 	printEnemies();
 
 	list<string> exits = map->getExits(hero->getXPos(), hero->getYPos());
@@ -170,6 +171,12 @@ void Main::printExits()
 	cout << endl;
 }
 
+void Main::printRoomInformation()
+{
+	string desc = map->chamberList[hero->getYPos()][hero->getXPos()].getDescription();
+	cout << desc << endl;
+}
+
 void Main::printMap()
 {
 	map->printMap(hero->getXPos(), hero->getYPos());
@@ -185,6 +192,38 @@ void Main::printSkills()
 	hero->printSkills();
 }
 
+void Main::printRest()
+{
+	int level = hero->getLevel();
+	hero->addCurrentHp(level);
+}
+
+void Main::printNotice()
+{
+	int notice = hero->getNotice();
+	if (notice < 3)
+	{
+		int right = rand() % 3;
+		if (right == 3 || right == 2 || right == 1)
+		{
+			std::vector<string> items = map->chamberList[hero->getYPos()][hero->getXPos()].getItemTypes();
+			if (items.size() > 0)
+			{
+				cout << hero->getName() << " found something secret" << endl;
+
+				for (int i = 0; i < items.size(); ++i)
+					cout << "item " << i << ": " << items[i] << endl;
+
+				cout << "If you wanna add this to your inventory type 'pick' <itemname>" << endl;
+			}
+			else
+				cout << "There are no items in this room" << endl;
+		}
+		else
+			cout << hero->getName() << " couldn't find anything in this room" << endl;
+	}
+}
+
 void Main::printEnemies()
 {
 	if (map->hasEnemies(hero->getXPos(), hero->getYPos()))
@@ -193,24 +232,55 @@ void Main::printEnemies()
 		cout << endl << "There are no enemies in this room" << endl << endl;
 }
 
-void Main::climbStairs()
+void Main::climbStairs(string side)
 {
-	if (map->hasStairsUp(hero->getXPos(), hero->getYPos()))
+	if (side == "up")
 	{
-		floorNumber++;
-		map = new Map(Map::horizontalMapSize, Map::verticalMapSize, floorNumber);
-		floors.push_back(map);
-		hero->setXPos(0);
-		hero->setYPos(0);
+		if (map->hasStairsUp(hero->getXPos(), hero->getYPos()))
+		{
+			floorNumber++;
+			map = new Map(Map::horizontalMapSize, Map::verticalMapSize, floorNumber);
+			floors.push_back(map);
+			hero->setXPos(0);
+			hero->setYPos(0);
+
+			cout << hero->getName() << " climbed the stairs up to floor " << floorNumber << endl;
+		}
+		else 
+		{
+			cout << "There is no stairs to the next floor" << endl;
+		}
 	}
-	else if (map->hasStairsDown(hero->getXPos(), hero->getYPos()))
+	else if (side == "down")
 	{
-		floorNumber--;
-		map = floors[(floorNumber - 1)];
+		if (map->hasStairsDown(hero->getXPos(), hero->getYPos()))
+		{
+			floorNumber--;
+			map = floors[(floorNumber - 1)];
+
+			// Set the hero on the "H" spot where it was the last time
+			for (int y = 0; y < map->verticalMapSize; ++y)
+			{
+				for (int x = 0; x < map->horizontalMapSize; ++x)
+				{
+					if (map->chamberList[y][x].hasStairsUp())
+					{
+						hero->setXPos(x);
+						hero->setYPos(y);
+					}
+				}
+			}
+
+			cout << hero->getName() << " climbed the stairs down to floor " << floorNumber << endl;
+		}
+		else
+		{
+			cout << "There is no stairs to the previous floor" << endl;
+		}
 	}
 	else
 	{
-		cout << endl << "There are no stairs in this room" << endl << endl;
+		cout << endl << "There is no side " << side << endl;
 	}
 }
 
@@ -268,15 +338,31 @@ void Main::goTo(string exit)
 		}
 
 		map->setVisited(hero->getXPos(), hero->getYPos());
-
+		// TODO beschrijving van de specifieke kamer
+		setDescriptionOfRoom(hero->getXPos(), hero->getYPos());
 		cout << endl << "Welcome in the room to the " + exit + " of the previous room." << endl;
 
 		printExits();
+
+		if (map->hasStairsDown(hero->getXPos(), hero->getYPos()))
+		{
+			cout << "You are able to go one floor below, if you want that type 'climb' to go one floor lower" << endl;
+		}
+
+		if (map->hasStairsUp(hero->getXPos(), hero->getYPos()))
+		{
+			cout << "You are able to go one floor above, if you want that type 'climb' to go one floor up" << endl;
+		}
 	}
 	else
 	{
 		cout << "There is no exit that way." << endl;
 	}
+}
+
+void Main::setDescriptionOfRoom(int x, int y)
+{
+	//string description = map->chamberList[y][x].getDescription();
 }
 
 void Main::dropItem(string itemName)
@@ -311,6 +397,13 @@ void Main::useItem(string itemName)
 	}
 	else
 		hero->useItem(itemName);
+}
+
+void Main::pickItem(string itemName)
+{
+	hero->addItem(itemName);
+	// TODO delete item from items in specific chamber 
+	//std::vector<string> itemsLeftInRoom = map->chamberList[hero->getYPos()][hero->getXPos()].getItemTypes();
 }
 
 void Main::engage()
@@ -499,15 +592,20 @@ void Main::doCommand(string command)
 			printSkills();
 			return;
 		}
-		//if command = climb
-		if (command == singleCommandsRoom[CLIMB])
+		// if command = rest 
+		if (command == singleCommandsRoom[REST])
 		{
-			climbStairs();
+			printRest();
 			return;
 		}
-
+		// if command = notice
+		if (command == singleCommandsRoom[NOTICE])
+		{
+			printNotice();
+			return;
+		}
 		//if command contains 'go' get the exit
-		if (command.find(doubleCommandsRoom[GO]) != string::npos)
+		if (command.substr(0,3).find(doubleCommandsRoom[GO]) != string::npos)
 		{
 			string exit;
 
@@ -518,6 +616,18 @@ void Main::doCommand(string command)
 
 			goTo(exit);
 
+			return;
+		}
+		//if command = climb
+		if (command.find(doubleCommandsRoom[CLIMB]) != string::npos)
+		{
+			string side;
+			if (command.size() > 6)
+				side = command.substr(6);
+			else
+				side = "";
+
+			climbStairs(side);
 			return;
 		}
 		//if command contains 'drop' get the item name
@@ -533,6 +643,22 @@ void Main::doCommand(string command)
 
 			return;
 		}
+		if (hasNoticed)
+		{
+			if (command.find(doubleCommandsRoom[PICK]) != string::npos)
+			{
+				string itemName;
+				if (command.size() > 5)
+					itemName = command.substr(5);
+				else
+					itemName = "";
+
+				pickItem(itemName);
+				return;
+			}
+		}
+		else
+			cout << "You cannot pick an object which is not noticed";
 	}
 	/*
 	//Else if in combat check the combat commands

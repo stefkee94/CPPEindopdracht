@@ -2,6 +2,7 @@
 
 #include "Map.h"
 #include "Enemy.h"
+#include "ItemType.h"
 
 #include <vector>
 #include <random>
@@ -35,6 +36,9 @@ public:
 	Enemy& getEnemy(string name);
 	vector<Enemy*> getAllEnemies();
 
+	string getDescription();
+	vector<string> getItemTypes();
+
 	void setExitNorth();
 	void setExitEast();
 	void setExitSouth();
@@ -46,6 +50,8 @@ private:
 	bool north, east, south, west;
 	bool visited, marked, stairsUp, stairsDown;
 	int floorNumber, x, y;
+	string description;
+	std::vector<string> item_types;
 
 	vector<Enemy*> enemies;
 	const int MAXENEMIES = 3;
@@ -56,6 +62,7 @@ private:
 	void generateRandomItems();
 	void generateRandomTraps();
 	void generateStairs();
+	string generateRandomDescription();
 	void generate();
 };
 

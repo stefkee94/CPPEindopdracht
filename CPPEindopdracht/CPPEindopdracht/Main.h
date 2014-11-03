@@ -20,7 +20,7 @@ private:
 	Map* map;
 	Hero* hero;
 	bool playing;
-	bool inCombat;
+	bool inCombat, hasNoticed;
 	int horizontal = 10;
 	int vertical = 10;
 	int floorNumber = 1;
@@ -38,11 +38,15 @@ private:
 
 	void printCommands();
 	void printExits();
+	void printRoomInformation();
 	void printMap();
 	void printInventory();
 	void printSkills();
+	void printRest();
+	void printNotice();
 	void printEnemies();
-	void climbStairs();
+	void climbStairs(string side);
+	void setDescriptionOfRoom(int x, int y);
 
 	std::vector<string> printAvailableItems();
 
@@ -50,6 +54,7 @@ private:
 	void goTo(string exit);
 	void dropItem(string itemName);
 	void useItem(string itemName);
+	void pickItem(string itemName);
 	void engage();
 	void attackEnemy(string enemyName);
 	void attackEnemyWithGrenade(int damage);
