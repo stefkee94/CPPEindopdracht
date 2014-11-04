@@ -2,7 +2,7 @@
 
 const int QUIT = 0, SHOWCOMMANDS = 1, INVENTORY = 2, ENEMIES = 3;
 const int USE = 0;
-const int EXITS = 0, MAP = 1, ENGAGE = 2, SKILLS = 3, REST = 4, NOTICE = 5;
+const int EXITS = 0, MAP = 1, ENGAGE = 2, SKILLS = 3, REST = 4, SEARCH = 5, NOTICE = 6;
 const int GO = 0, DROP = 1, CLIMB = 2, PICK = 3;
 const int FLEE = 0;
 const int ATTACK = 0;
@@ -10,7 +10,7 @@ const int ATTACK = 0;
 const int MAXSINGLECOMMANDSGENERAL = 4;
 const int MAXDOUBLECOMMANDSGENERAL = 1;
 
-const int MAXSINGLECOMMANDSROOM = 6;
+const int MAXSINGLECOMMANDSROOM = 7;
 const int MAXDOUBLECOMMANDSROOM = 4;
 
 const int MAXSINGLECOMMANDSCOMBAT = 1;
@@ -19,7 +19,7 @@ const int MAXDOUBLECOMMANDSCOMBAT = 1;
 const string singleCommandsGeneral[MAXSINGLECOMMANDSGENERAL] = { "quit", "?", "inventory", "enemies" };
 const string doubleCommandsGeneral[MAXDOUBLECOMMANDSGENERAL] = { "use" };
 
-const string singleCommandsRoom[MAXSINGLECOMMANDSROOM] = { "exits", "map", "engage", "skills", "rest", "notice" };
+const string singleCommandsRoom[MAXSINGLECOMMANDSROOM] = { "exits", "map", "engage", "skills", "rest", "search", "notice"  };
 const string doubleCommandsRoom[MAXDOUBLECOMMANDSROOM] = { "go", "drop", "climb", "pick" };
 
 const string singleCommandsCombat[MAXSINGLECOMMANDSCOMBAT] = { "flee" };
@@ -196,31 +196,90 @@ void Main::printRest()
 {
 	int level = hero->getLevel();
 	hero->addCurrentHp(level);
+	std::vector<Enemy*> enemies = map->chamberList[hero->getYPos()][hero->getXPos()].getAllEnemies();
+
+	//TODO CHANCE that enemies are attacking you if size > 0
+	bool enemiesAttacking = rand() % 2 == 1;
+	if (enemies.size() > 0)
+	{
+		if (enemiesAttacking)
+		{
+			for (int i = 0; i < enemies.size(); ++i)
+			{
+				int damage = map->enemyAttack(hero->getXPos(), hero->getYPos(), *hero, i);
+				hero->Hit(damage);
+			}
+		}
+		else
+			cout << "While resting the enemies did not attack " << endl;
+	}
+	else
+		cout << "There were no enemies to attack you while resting" << endl;
+	
+
+	if (hero->getCurrentHp() == 0)
+	{
+		cout << endl;
+		cout << "You are dead" << endl;
+		playing = false;
+	}
+}
+
+void Main::printItem()
+{
+	std::vector<string> items = map->chamberList[hero->getYPos()][hero->getXPos()].getItemTypes();
+	if (items.size() > 0)
+	{
+		cout << hero->getName() << " found something secret" << endl;
+
+		for (int i = 0; i < items.size(); ++i)
+			cout << "item " << i << ": " << items[i] << endl;
+
+		cout << "If you wanna add this to your inventory type 'pick' <itemname>" << endl;
+	}
+	else
+		cout << "There are no items in this room" << endl;
 }
 
 void Main::printNotice()
 {
+	// Trying to find some traps in a chamber
 	int notice = hero->getNotice();
 	if (notice < 3)
 	{
 		int right = rand() % 3;
 		if (right == 3 || right == 2 || right == 1)
 		{
-			std::vector<string> items = map->chamberList[hero->getYPos()][hero->getXPos()].getItemTypes();
-			if (items.size() > 0)
+			//TODO notice traps
+			if (map->chamberList[hero->getYPos()][hero->getXPos()].getTrap())
 			{
-				cout << hero->getName() << " found something secret" << endl;
-
-				for (int i = 0; i < items.size(); ++i)
-					cout << "item " << i << ": " << items[i] << endl;
-
-				cout << "If you wanna add this to your inventory type 'pick' <itemname>" << endl;
+				map->chamberList[hero->getYPos()][hero->getXPos()].setTrap(false);
+				cout << hero->getName() << " discovered a secret trap!" << endl;
 			}
 			else
-				cout << "There are no items in this room" << endl;
+			{
+				cout << "There are no traps in this room" << endl;
+			}
 		}
 		else
-			cout << hero->getName() << " couldn't find anything in this room" << endl;
+		{
+			cout << hero->getName() << " is unlucky with noticing traps in this room, try again" << endl;
+		}
+	}
+	else
+	{
+		int right = rand() % 2;
+		if (right == 1 || right == 2)
+		{
+			if (map->chamberList[hero->getYPos()][hero->getXPos()].getTrap())
+			{
+				map->chamberList[hero->getYPos()][hero->getXPos()].setTrap(false);
+			}
+			else
+			{
+				cout << "There are no traps in this room" << endl;
+			}
+		}
 	}
 }
 
@@ -229,27 +288,37 @@ void Main::printEnemies()
 	if (map->hasEnemies(hero->getXPos(), hero->getYPos()))
 		map->printEnemies(hero->getXPos(), hero->getYPos());
 	else
+	{
 		cout << endl << "There are no enemies in this room" << endl << endl;
+		inCombat = false;
+	}
+		
 }
 
 void Main::climbStairs(string side)
 {
 	if (side == "up")
 	{
-		if (map->hasStairsUp(hero->getXPos(), hero->getYPos()))
+		if (hero->getKilledEnemies() >= map->getAmountOfEnemiesToKill())
 		{
-			floorNumber++;
-			map = new Map(Map::horizontalMapSize, Map::verticalMapSize, floorNumber);
-			floors.push_back(map);
-			hero->setXPos(0);
-			hero->setYPos(0);
+			if (map->hasStairsUp(hero->getXPos(), hero->getYPos()))
+			{
+				floorNumber++;
+				map = new Map(Map::horizontalMapSize, Map::verticalMapSize, floorNumber);
+				hero->setKilledEnemies(0);
+				floors.push_back(map);
+				hero->setXPos(0);
+				hero->setYPos(0);
 
-			cout << hero->getName() << " climbed the stairs up to floor " << floorNumber << endl;
+				cout << hero->getName() << " climbed the stairs up to floor " << floorNumber << endl;
+			}
+			else
+			{
+				cout << "There is no stairs to the next floor" << endl;
+			}
 		}
-		else 
-		{
-			cout << "There is no stairs to the next floor" << endl;
-		}
+		else
+			cout << hero->getName() << " cannot move to the next floor because the hero killed to less enemies in this floor" << endl;
 	}
 	else if (side == "down")
 	{
@@ -314,6 +383,12 @@ void Main::addSkills()
 
 void Main::goTo(string exit)
 {
+	if (map->chamberList[hero->getYPos()][hero->getXPos()].getTrap())
+	{
+		hero->setCurrentHp(hero->getCurrentHp() - 1);
+		cout << "Oops, a trap has not been discovered, " << hero->getName() << " loses 1 Hp, you have now " << hero->getCurrentHp() << " from a total of " << hero->getMaxHp() << endl;
+	}
+
 	if (map->hasExit(hero->getXPos(), hero->getYPos(), exit))
 	{
 		if (exit == "north")
@@ -402,8 +477,22 @@ void Main::useItem(string itemName)
 void Main::pickItem(string itemName)
 {
 	hero->addItem(itemName);
-	// TODO delete item from items in specific chamber 
-	//std::vector<string> itemsLeftInRoom = map->chamberList[hero->getYPos()][hero->getXPos()].getItemTypes();
+	// Get the item type
+	ItemType item = hero->getItemType(itemName);
+	if (!(item == ItemType::NOITEM))
+	{
+		std::vector<string> itemsLeftInRoom = map->chamberList[hero->getYPos()][hero->getXPos()].getItemTypes();
+		for (std::vector<string>::iterator iter = itemsLeftInRoom.begin(); iter != itemsLeftInRoom.end(); ++iter)
+		{
+			if (*iter == itemName)
+			{
+				// Remove item which is chosen and already added
+				itemsLeftInRoom.erase(iter);
+				map->chamberList[hero->getYPos()][hero->getXPos()].setItemTypes(itemsLeftInRoom);
+				break;
+			}
+		}
+	}
 }
 
 void Main::engage()
@@ -437,6 +526,7 @@ void Main::attackEnemy(string enemyName)
 
 		if (damage >= e.getCurrentHp())
 		{
+			hero->setKilledEnemies(1);
 			if (hero->addExperience(e.getEnemyLevel()))
 				addSkills();
 		}
@@ -491,6 +581,7 @@ void Main::attackEnemyWithGrenade(int damage)
 
 			if (damage >= enemies_in_chamber[i]->getCurrentHp())
 			{
+				hero->setKilledEnemies(1);
 				if (hero->addExperience(enemies_in_chamber[i]->getEnemyLevel()))
 					addSkills();
 			}
@@ -598,6 +689,11 @@ void Main::doCommand(string command)
 			printRest();
 			return;
 		}
+		if (command == singleCommandsRoom[SEARCH])
+		{
+			printItem();
+			return;
+		}
 		// if command = notice
 		if (command == singleCommandsRoom[NOTICE])
 		{
@@ -658,7 +754,7 @@ void Main::doCommand(string command)
 			}
 		}
 		else
-			cout << "You cannot pick an object which is not noticed";
+			cout << "You cannot pick an object which is not found";
 	}
 	/*
 	//Else if in combat check the combat commands

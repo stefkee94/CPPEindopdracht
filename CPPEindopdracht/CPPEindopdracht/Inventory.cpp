@@ -40,22 +40,26 @@ bool Inventory::checkIfInventoryIsEmpty()
 }
 
 //return if the item is added or if the inventory is full
-string Inventory::addItem(string itemName)
+void Inventory::addItem(string itemName)
 {
 	ItemType item = getItemType(itemName);
-
-	for (int i = 0; i < TOTALSPACE; ++i)
+	if (!(item == ItemType::NOITEM))
 	{
-		if (items[i] == ItemType::NOITEM)
+		for (int i = 0; i < TOTALSPACE; ++i)
 		{
-			items[i] = item;
-			cout << "Item " << itemName << " added to your inventory." << endl;
-			return "Item " + itemName + " added to your inventory.";
+			if (items[i] == ItemType::NOITEM)
+			{
+				items[i] = item;
+				cout << "Item " << itemName << " added to your inventory." << endl;
+				return;
+			}
 		}
+		cout << "Item " << itemName << " couldn't be added because the inventory is full" << endl;
 	}
-
-	cout << "Item " << itemName << " couldn't be added because the inventory is full" << endl;
-	return "Your inventory is full.";
+	else 
+	{
+		cout << "Cannot add item " << itemName << "it's invalid" << endl;
+	}
 }
 
 string Inventory::dropItem(string itemName)

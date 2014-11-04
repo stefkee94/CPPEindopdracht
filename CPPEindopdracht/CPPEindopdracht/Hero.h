@@ -28,6 +28,7 @@ public:
 	int getExpNeeded();
 	int getLevel();
 	int getNotice();
+	ItemType getItemType(string itemName);
 
 	void addAttack();
 	void addDefense();
@@ -39,10 +40,15 @@ public:
 	void fillHp(int amount);
 	void equipSword(int extra_attack);
 
+	int getKilledEnemies();
+	void setKilledEnemies(int amount);
+
 private:
 	const int MAXLEVEL = 10;
 	int experience;
 	int notice;
+	int killed_enemies;
+
 	Inventory inventory;
 
 	int xPos;

@@ -12,12 +12,12 @@ string Enemy::getEnemyName(EnemyType type)
 {
 	if (type == EnemyType::RAT)
 		return "rat";
-	if (type == EnemyType::DRAGON)
-		return "dragon";
+	if (type == EnemyType::DOG)
+		return "dog";
 	if (type == EnemyType::CHICKEN)
 		return "chicken";
-	if (type == EnemyType::MOUSE)
-		return "mouse";
+	if (type == EnemyType::DINO)
+		return "dino";
 	if (type == EnemyType::TURTLE)
 		return "turtle";
 	if (type == EnemyType::BOSS)

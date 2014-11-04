@@ -28,6 +28,7 @@ public:
 	bool hasExitWest();
 	bool isVisited();
 	bool isMarked();
+	bool getTrap();
 	bool hasStairsUp();
 	bool hasStairsDown();
 	bool hasEnemies();
@@ -39,16 +40,18 @@ public:
 	string getDescription();
 	vector<string> getItemTypes();
 
+	void setTrap(bool noticed_trap);
 	void setExitNorth();
 	void setExitEast();
 	void setExitSouth();
 	void setExitWest();
 	void setVisited();
 	void setMarked();
+	void setItemTypes(std::vector<string> new_list);
 
 private:
 	bool north, east, south, west;
-	bool visited, marked, stairsUp, stairsDown;
+	bool visited, marked, stairsUp, stairsDown, trap;
 	int floorNumber, x, y;
 	string description;
 	std::vector<string> item_types;

@@ -41,8 +41,13 @@ public:
 	void printEnemies(int x, int y);
 	vector<Enemy*> getAllEnemies(int x, int y);
 
+	int getAmountOfEnemiesToKill();
+	void setAmountOfEnemiesToKill(int amount);
+	
+
 private:
 	int amountOfChambers;
+	int enemiesNeedToKill;
 
 	int randomNumber(int min, int max);
 	void generateRandomMap(int floor_number);

@@ -52,6 +52,11 @@ int MapObject::getCurrentHp()
 	return currentHp;
 }
 
+void MapObject::setCurrentHp(int amount)
+{
+	currentHp = amount;
+}
+
 int MapObject::getMaxHp()
 {
 	return maxHp;

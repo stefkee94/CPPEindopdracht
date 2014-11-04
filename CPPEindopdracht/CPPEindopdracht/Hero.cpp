@@ -12,7 +12,8 @@ void Hero::printSkills()
 	cout << endl << "Experience: " << experience;
 	cout << endl << "Attack: " << attack ;
 	cout << endl << "Defense: " << defense;
-	cout << endl << "Notice: " << notice << endl << endl;
+	cout << endl << "Notice: " << notice;
+	cout << endl << "Killed enemies: " << killed_enemies << endl << endl;
 }
 
 //Returns true if level up
@@ -98,6 +99,19 @@ int Hero::getLevel()
 	return level;
 }
 
+int Hero::getKilledEnemies()
+{
+	return killed_enemies;
+}
+
+void Hero::setKilledEnemies(int amount)
+{
+	if (amount == 0)
+		killed_enemies = 0;
+	else
+		killed_enemies += amount;
+}
+
 void Hero::addAttack()
 {
 	attack++;
@@ -148,6 +162,11 @@ void Hero::addItem(string itemName)
 	inventory.addItem(itemName);
 }
 
+ItemType Hero::getItemType(string itemName)
+{
+	return inventory.getItemType(itemName);
+}
+
 void Hero::fillHp(int amount)
 {
 	if (currentHp + amount >= maxHp)
@@ -188,6 +207,7 @@ Hero::Hero(string hero_name, string start_item)
 	attack = 4;
 	defense = 2;
 	notice = 1;
+	killed_enemies = 0;
 
 	inventory.addItem(start_item);
 }

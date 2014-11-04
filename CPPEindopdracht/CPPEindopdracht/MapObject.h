@@ -13,6 +13,7 @@ public:
 
 	string getName();
 	int getCurrentHp();
+	void setCurrentHp(int amount);
 	int getMaxHp();
 	bool isDead();
 

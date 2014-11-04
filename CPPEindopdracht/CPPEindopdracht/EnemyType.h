@@ -3,8 +3,8 @@
 enum class EnemyType
 {
 	RAT = 0,
-	DRAGON,
-	MOUSE,
+	DINO,
+	DOG,
 	TURTLE,
 	CHICKEN,
 	BOSS,

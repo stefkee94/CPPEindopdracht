@@ -3,10 +3,12 @@
 const int SIZES = 3;
 const int CLEANORDIRTY = 2;
 const int SIZEOFFURNITURE = 3;
+const int LIGHTINGSIZE = 3;
 
 const string SIZEOFCHAMBER[SIZES] = { "big", "average", "small" };
 const string CLEANORDIRTYCHAMBER[CLEANORDIRTY] = { "clean", "dirty" };
 const string FURNITURE[SIZEOFFURNITURE] = { "table", "bed", "empty" };
+const string LIGHTNING[LIGHTINGSIZE] = { "candle", "torch", "fire" };
 
 int Chamber::randomNumber(int min, int max)
 {
@@ -312,13 +314,26 @@ void Chamber::generateRandomExits(int x, int y)
 
 void Chamber::generateRandomEnemies()
 {
-	int numberOfEnemies = randomNumber(0, MAXENEMIES);
-
-	for (int i = 0; i < numberOfEnemies; ++i)
+	if ((floorNumber == 2 && hasStairsUp()) || (floorNumber == 5))
 	{
-		//TODO make random enemy
-		EnemyType randEnemy = EnemyType(rand() % 4);
-		enemies.push_back(new Enemy(randEnemy, floorNumber, i));
+		int bossNumber;
+		if (floorNumber == 3)
+			bossNumber = 1;
+		else
+			bossNumber = 2;
+
+		enemies.push_back(new Enemy(EnemyType::BOSS, floorNumber, bossNumber));
+	}
+	else
+	{
+		int numberOfEnemies = randomNumber(0, MAXENEMIES);
+
+		for (int i = 0; i < numberOfEnemies; ++i)
+		{
+			//TODO make random enemy
+			EnemyType randEnemy = EnemyType(rand() % 4);
+			enemies.push_back(new Enemy(randEnemy, floorNumber, i));
+		}
 	}
 }
 
@@ -357,7 +372,8 @@ void Chamber::generateRandomItems()
 
 void Chamber::generateRandomTraps()
 {
-
+	bool isTrap = rand() % 2 == 1;
+	trap = isTrap;
 }
 
 string Chamber::generateRandomDescription()
@@ -365,6 +381,7 @@ string Chamber::generateRandomDescription()
 	string sizeOfChamber = SIZEOFCHAMBER[randomNumber(0, SIZES-1)];
 	string cleanOrDirtyChamber = CLEANORDIRTYCHAMBER[randomNumber(0, CLEANORDIRTY-1)];
 	string furnitureInChamber = FURNITURE[randomNumber(0, SIZEOFFURNITURE-1)];
+	string lightingInChamber = LIGHTNING[randomNumber(0, LIGHTINGSIZE - 1)];
 
 	// set description for the size
 	if (sizeOfChamber == "big")
@@ -380,6 +397,14 @@ string Chamber::generateRandomDescription()
 	else if (cleanOrDirtyChamber == "dirty")
 		description += " which is very dirty";
 
+	//further with lighting in the room
+	if (lightingInChamber == "candle")
+		description += " and lit by a candle";
+	else if (lightingInChamber == "torch")
+		description += " and lit by a torch";
+	else if (lightingInChamber == "fire")
+		description += " and lit by a fire of a fireplace";
+
 	//last one, furniture in the room
 	if (furnitureInChamber == "table")
 		description += " with a table and four chairs";
@@ -387,6 +412,7 @@ string Chamber::generateRandomDescription()
 		description += " with a bed in the corner";
 	else if (furnitureInChamber == "empty")
 		description += " and totally empty";
+
 
 	return description;
 }
@@ -536,9 +562,24 @@ vector<string> Chamber::getItemTypes()
 	return item_types;
 }
 
+void Chamber::setItemTypes(std::vector<string> new_list)
+{
+	item_types = new_list;
+}
+
 vector<Enemy*> Chamber::getAllEnemies()
 {
 	return enemies;
+}
+
+void Chamber::setTrap(bool noticed_trap)
+{
+	trap = noticed_trap;
+}
+
+bool Chamber::getTrap()
+{
+	return trap;
 }
 
 bool Chamber::isVisited()
@@ -595,7 +636,7 @@ void Chamber::setMarked()
 void Chamber::generate()
 {
 	generateRandomExits(x, y);
-	generateRandomEnemies();
+	
 	generateRandomItems();
 	generateRandomTraps();
 	generateRandomDescription();
@@ -610,6 +651,7 @@ void Chamber::generate()
 	{
 		generateStairs();
 	}
+	generateRandomEnemies();
 }
 
 Chamber::Chamber(int _x, int _y, int floor_number)
@@ -617,7 +659,6 @@ Chamber::Chamber(int _x, int _y, int floor_number)
 	floorNumber = floor_number;
 	x = _x;
 	y = _y;
-	description = 
 	visited = false;
 	marked = false;
 	stairsUp = false;
@@ -655,6 +696,7 @@ Chamber::Chamber(const Chamber& other)
 	stairsDown = other.stairsDown;
 	description = other.description;
 	item_types = other.item_types;
+	trap = other.trap;
 	floorNumber = other.floorNumber;
 	x = other.x;
 	y = other.y;
@@ -692,7 +734,7 @@ Chamber& Chamber::operator=(const Chamber& other)
 		stairsDown = other.stairsDown;
 		item_types = other.item_types;
 		description = other.description;
-
+		trap = other.trap;
 		floorNumber = other.floorNumber;
 		x = other.x;
 		y = other.y;

@@ -43,6 +43,7 @@ private:
 	void printInventory();
 	void printSkills();
 	void printRest();
+	void printItem();
 	void printNotice();
 	void printEnemies();
 	void climbStairs(string side);

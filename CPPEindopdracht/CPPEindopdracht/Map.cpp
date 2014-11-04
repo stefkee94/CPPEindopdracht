@@ -290,6 +290,16 @@ int Map::getAmountOfEnemies(int x, int y)
 	return chamberList[y][x].getAmountOfEnemies();
 }
 
+int Map::getAmountOfEnemiesToKill()
+{
+	return enemiesNeedToKill;
+}
+
+void Map::setAmountOfEnemiesToKill(int amount)
+{
+	enemiesNeedToKill = amount;
+}
+
 int Map::enemyAttack(int x, int y, MapObject hero, int index)
 {
 	return chamberList[y][x].enemyAttack(hero, index);
@@ -448,6 +458,7 @@ Map::Map(int horizontalSize, int verticalSize, int floor_number)
 		chamberList[i].resize(horizontalMapSize);
 	}
 
+	setAmountOfEnemiesToKill(floor_number);
 	generateRandomMap(floor_number);
 }
 

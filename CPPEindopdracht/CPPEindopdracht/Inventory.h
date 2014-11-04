@@ -16,7 +16,7 @@ public:
 
 	void printInventory();
 	bool checkIfInventoryIsEmpty();
-	string addItem(string item);
+	void addItem(string item);
 	string dropItem(string itemName);
 
 	ItemType getItemType(string itemName);
