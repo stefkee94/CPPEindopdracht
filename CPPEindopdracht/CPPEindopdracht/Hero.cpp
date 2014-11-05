@@ -1,4 +1,5 @@
 #include "Hero.h"
+#include <fstream>
 
 void Hero::printInventory()
 {
@@ -191,6 +192,28 @@ void Hero::removeItemFromInventory(string itemName)
 	inventory.dropItem(itemName);
 }
 
+void Hero::loadHeroInfo()
+{
+	
+}
+
+void Hero::saveHeroInfo()
+{
+	const string textfile("hero_information.txt");
+
+	ofstream output_file(textfile);
+	output_file << "Name : " << name << endl;
+	output_file << "Level : " << level << endl;
+	output_file << "Current hp : " << currentHp << endl;
+	output_file << "Experience : " << experience << endl;
+	output_file << "Attack : " << attack << endl;
+	output_file << "Defense : " << defense << endl;
+	output_file << "Notice : " << notice << endl;
+	output_file << "Killed enemies : " << killed_enemies << endl;
+
+	output_file.close();
+}
+
 #pragma endregion gettersAndSetters
 
 Hero::Hero(string hero_name, string start_item)
@@ -199,7 +222,7 @@ Hero::Hero(string hero_name, string start_item)
 	xPos = 0;
 	yPos = 0;
 
-	//Start values
+	////Start values
 	name = hero_name;
 	level = 1;
 	currentHp = maxHp = 5;
@@ -209,7 +232,9 @@ Hero::Hero(string hero_name, string start_item)
 	notice = 1;
 	killed_enemies = 0;
 
-	inventory.addItem(start_item);
+	//inventory.addItem(start_item);
+	loadHeroInfo();
+	
 }
 
 Hero::~Hero()

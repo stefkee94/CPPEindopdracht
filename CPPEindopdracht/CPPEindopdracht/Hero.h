@@ -50,7 +50,9 @@ public:
 
 	int getKilledEnemies();
 	void setKilledEnemies(int amount);
-
+	void loadHeroInfo();
+	void saveHeroInfo();
+	
 private:
 	const int MAXLEVEL = 10;
 	int experience;
@@ -61,5 +63,7 @@ private:
 
 	int xPos;
 	int yPos;
+
+	
 };
 

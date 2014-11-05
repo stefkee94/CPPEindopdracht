@@ -19,6 +19,10 @@ class Enemy : public MapObject
 public:
 	Enemy(EnemyType eType, int floorNumber, int number);
 	Enemy();
+
+	Enemy(const Enemy& other);
+	Enemy& operator=(const Enemy& other);
+
 	virtual ~Enemy();
 
 	int randomNumber(int min, int max);

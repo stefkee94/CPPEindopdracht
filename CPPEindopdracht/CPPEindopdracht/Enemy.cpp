@@ -43,6 +43,36 @@ Enemy::Enemy(EnemyType eType, int floorNumber, int number) : type(eType)
 	defense = (1 * level);
 }
 
+Enemy::Enemy(const Enemy& other)
+{
+	if (this != &other)
+	{
+		type = other.type;
+		name = other.name;
+		level = other.level;
+		currentHp = other.currentHp;
+		maxHp = other.currentHp;
+		attack = other.attack;
+		defense = other.defense;
+	}
+}
+
+Enemy& Enemy::operator=(const Enemy& other)
+{
+	if (this != &other)
+	{
+		type = other.type;
+		name = other.name;
+		level = other.level;
+		currentHp = other.currentHp;
+		maxHp = other.currentHp;
+		attack = other.attack;
+		defense = other.defense;
+	}
+
+	return *this;
+}
+
 Enemy::Enemy()
 {
 

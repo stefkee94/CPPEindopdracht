@@ -69,5 +69,7 @@ private:
 	void attackEnemyWithGrenade(int damage);
 	void flee();
 	void doCommand(string command);
+	void saveFile();
+	void lastBreath();
 };
 

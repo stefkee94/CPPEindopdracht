@@ -332,7 +332,8 @@ void Chamber::generateRandomEnemies()
 		{
 			//TODO make random enemy
 			EnemyType randEnemy = EnemyType(rand() % 4);
-			enemies.push_back(new Enemy(randEnemy, floorNumber, i));
+			Enemy* newEnemy = new Enemy(randEnemy, floorNumber, i);
+			enemies.push_back(newEnemy);
 		}
 	}
 }
@@ -477,8 +478,9 @@ void Chamber::hitEnemy(string enemyName, int damage)
 			e->Hit(damage);
 			if (e->isDead())
 			{
-				enemies.erase(enemies.begin() + i);
 				cout << endl << e->getName() << " died" << endl;
+				delete enemies[i];
+				enemies.erase(enemies.begin() + i);
 			}
 		}
 	}
@@ -681,26 +683,29 @@ Chamber::Chamber()
 
 Chamber::Chamber(const Chamber& other)
 {
-	north = other.north;
-	east = other.east;
-	south = other.south;
-	west = other.west;
-
-	visited = other.visited;
-	marked = other.marked;
-	stairsUp = other.stairsUp;
-	stairsDown = other.stairsDown;
-	description = other.description;
-	item_types = other.item_types;
-	trap = other.trap;
-	floorNumber = other.floorNumber;
-	x = other.x;
-	y = other.y;
-
-	for (Enemy* e : other.enemies)
+	if (this != &other)
 	{
-		Enemy* clone = new Enemy(*e);
-		enemies.push_back(clone);
+		north = other.north;
+		east = other.east;
+		south = other.south;
+		west = other.west;
+
+		visited = other.visited;
+		marked = other.marked;
+		stairsUp = other.stairsUp;
+		stairsDown = other.stairsDown;
+		description = other.description;
+		item_types = other.item_types;
+		trap = other.trap;
+		floorNumber = other.floorNumber;
+		x = other.x;
+		y = other.y;
+
+		for (Enemy* e : other.enemies)
+		{
+			Enemy* clone = new Enemy(*e);
+			enemies.push_back(clone);
+		}
 	}
 }
 

@@ -1,13 +1,13 @@
 #include "Main.h"
 
-const int QUIT = 0, SHOWCOMMANDS = 1, INVENTORY = 2, ENEMIES = 3;
+const int QUIT = 0, SHOWCOMMANDS = 1, INVENTORY = 2, ENEMIES = 3, SAVE = 4;
 const int USE = 0;
 const int EXITS = 0, MAP = 1, ENGAGE = 2, SKILLS = 3, REST = 4, SEARCH = 5, NOTICE = 6;
 const int GO = 0, DROP = 1, CLIMB = 2, PICK = 3;
 const int FLEE = 0;
 const int ATTACK = 0;
 
-const int MAXSINGLECOMMANDSGENERAL = 4;
+const int MAXSINGLECOMMANDSGENERAL = 5;
 const int MAXDOUBLECOMMANDSGENERAL = 1;
 
 const int MAXSINGLECOMMANDSROOM = 7;
@@ -16,7 +16,7 @@ const int MAXDOUBLECOMMANDSROOM = 4;
 const int MAXSINGLECOMMANDSCOMBAT = 1;
 const int MAXDOUBLECOMMANDSCOMBAT = 1;
 
-const string singleCommandsGeneral[MAXSINGLECOMMANDSGENERAL] = { "quit", "?", "inventory", "enemies" };
+const string singleCommandsGeneral[MAXSINGLECOMMANDSGENERAL] = { "quit", "?", "inventory", "enemies", "save" };
 const string doubleCommandsGeneral[MAXDOUBLECOMMANDSGENERAL] = { "use" };
 
 const string singleCommandsRoom[MAXSINGLECOMMANDSROOM] = { "exits", "map", "engage", "skills", "rest", "search", "notice"  };
@@ -219,9 +219,7 @@ void Main::printRest()
 
 	if (hero->getCurrentHp() == 0)
 	{
-		cout << endl;
-		cout << "You are dead" << endl;
-		playing = false;
+		lastBreath();
 	}
 }
 
@@ -421,9 +419,7 @@ void Main::goTo(string exit)
 
 		if (hero->getCurrentHp() <= 0)
 		{
-			cout << endl;
-			cout << "You are dead" << endl;
-			playing = false;
+			lastBreath();
 		}
 	}
 
@@ -650,6 +646,20 @@ void Main::flee()
 	cout << endl;
 }
 
+void Main::saveFile()
+{
+	hero->saveHeroInfo();
+	cout << hero->getName() << " saved the hero information" << endl;
+}
+
+void Main::lastBreath()
+{
+	hero->saveHeroInfo();
+	cout << endl;
+	cout << "You are dead" << endl;
+	playing = false;
+}
+
 void Main::doCommand(string command)
 {
 	/*
@@ -680,6 +690,12 @@ void Main::doCommand(string command)
 		return;
 	}
 
+	//if command = save -> save hero info to text file
+	if (command == singleCommandsGeneral[SAVE])
+	{
+		saveFile();
+		return;
+	}
 	//if command contains 'use' get and use an item
 	if (command.find(doubleCommandsGeneral[USE]) != string::npos)
 	{
@@ -963,8 +979,6 @@ Main::~Main()
 
 int main()
 {
-
-
 	//Memory leaks
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(170);
