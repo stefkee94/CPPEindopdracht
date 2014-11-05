@@ -378,10 +378,10 @@ void Chamber::generateRandomTraps()
 
 string Chamber::generateRandomDescription()
 {
-	string sizeOfChamber = SIZEOFCHAMBER[randomNumber(0, SIZES-1)];
+	string sizeOfChamber = SIZEOFCHAMBER[randomNumber(0,SIZES-1)];
 	string cleanOrDirtyChamber = CLEANORDIRTYCHAMBER[randomNumber(0, CLEANORDIRTY-1)];
 	string furnitureInChamber = FURNITURE[randomNumber(0, SIZEOFFURNITURE-1)];
-	string lightingInChamber = LIGHTNING[randomNumber(0, LIGHTINGSIZE - 1)];
+	string lightingInChamber = LIGHTNING[randomNumber(0, LIGHTINGSIZE-1)];
 
 	// set description for the size
 	if (sizeOfChamber == "big")
@@ -737,6 +737,7 @@ Chamber& Chamber::operator=(const Chamber& other)
 
 		for (Enemy* e : other.enemies)
 		{
+			// TODO FIX THIS LEAK
 			Enemy* clone = new Enemy(*e);
 			enemies.push_back(clone);
 		}

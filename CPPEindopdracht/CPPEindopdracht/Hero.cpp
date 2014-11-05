@@ -202,10 +202,10 @@ Hero::Hero(string hero_name, string start_item)
 	//Start values
 	name = hero_name;
 	level = 1;
-	currentHp = maxHp = 10;
+	currentHp = maxHp = 5;
 	experience = 0;
-	attack = 10;
-	defense = 20;
+	attack = 4;
+	defense = 2;
 	notice = 1;
 	killed_enemies = 0;
 

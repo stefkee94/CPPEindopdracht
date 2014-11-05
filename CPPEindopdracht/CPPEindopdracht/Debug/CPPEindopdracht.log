@@ -1,4 +1,4 @@
-﻿Build started 11/5/2014 7:56:51 AM.
+﻿Build started 11/5/2014 9:22:24 AM.
      1>Project "C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht.vcxproj" on node 2 (Build target(s)).
      1>Building with tools version "12.0".
      1>Target "_CheckForInvalidConfigurationAndPlatform" in file "C:\Program Files (x86)\MSBuild\12.0\bin\Microsoft.Common.CurrentVersion.targets" from project "C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht.vcxproj" (entry point):
@@ -238,15 +238,37 @@
          	C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\MAP.OBJ
          	C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\CHAMBER.OBJ
          	C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\MAPOBJECT.OBJ
-         Chamber.cpp will be compiled as C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Chamber.cpp was modified at 11/5/2014 7:56:24 AM.
+         Chamber.cpp will be compiled as C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Chamber.cpp was modified at 11/5/2014 9:21:16 AM.
+         Enemy.cpp will be compiled as C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\ENEMY.H was modified at 11/5/2014 9:21:30 AM.
+         Hero.cpp will be compiled as C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\HERO.H was modified at 11/5/2014 9:21:38 AM.
+         Inventory.cpp will be compiled as C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\INVENTORY.H was modified at 11/5/2014 9:21:43 AM.
+         Main.cpp will be compiled as C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\MAPOBJECT.H was modified at 11/5/2014 9:21:48 AM.
+         Map.cpp will be compiled as C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\ENEMY.H was modified at 11/5/2014 9:21:30 AM.
+         MapObject.cpp will be compiled as C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\MAPOBJECT.H was modified at 11/5/2014 9:21:48 AM.
          Environment Variables passed to tool:
-           VS_UNICODE_OUTPUT=1712
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Chamber.cpp
+           VS_UNICODE_OUTPUT=1692
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Chamber.cpp Enemy.cpp Hero.cpp Inventory.cpp Main.cpp Map.cpp MapObject.cpp
          Tracking command:
-         C:\Program Files (x86)\MSBuild\12.0\bin\Tracker.exe /d "C:\Program Files (x86)\MSBuild\12.0\bin\FileTracker.dll" /i C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.tlog /r C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CHAMBER.CPP /b MSBuildConsole_CancelEvent79e4b0b5907f42e2b8ae29764ec05a4f  /c "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe"  /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Chamber.cpp
+         C:\Program Files (x86)\MSBuild\12.0\bin\Tracker.exe /d "C:\Program Files (x86)\MSBuild\12.0\bin\FileTracker.dll" /i C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.tlog /r "C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CHAMBER.CPP|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\ENEMY.CPP|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\HERO.CPP|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\INVENTORY.CPP|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\MAIN.CPP|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\MAP.CPP|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\MAPOBJECT.CPP" /b MSBuildConsole_CancelEvent898508620ffd41fb8e064f2aeb0e44e5  /c "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe"  /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Chamber.cpp Enemy.cpp Hero.cpp Inventory.cpp Main.cpp Map.cpp MapObject.cpp
          Chamber.cpp
      1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\chamber.cpp(349): warning C4018: '<' : signed/unsigned mismatch
      1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\chamber.cpp(552): warning C4172: returning address of local variable or temporary
+         Generating Code...
+         Compiling...
+         MapObject.cpp
+         Map.cpp
+         Main.cpp
+     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\main.cpp(207): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\main.cpp(235): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\main.cpp(615): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\main.cpp(894): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\main.cpp(952): warning C4018: '<' : signed/unsigned mismatch
+         Hero.cpp
+         Enemy.cpp
+         Generating Code...
+         Compiling...
+         Inventory.cpp
+         Generating Code...
        Done executing task "CL".
      1>Done building target "ClCompile" in project "CPPEindopdracht.vcxproj".
        Target "ManagedIncrementalBuildPostProcessDependencyGraph" skipped, due to false condition; ('@(ClCompile)' != '' and '$(EnableManagedIncrementalBuild)' == 'True') was evaluated as ('Enemy.cpp;Hero.cpp;Inventory.cpp;Main.cpp;Map.cpp;Chamber.cpp;MapObject.cpp' != '' and 'false' == 'True').
@@ -392,9 +414,9 @@
          	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\VC\LIB\MSVCPRTD.LIB
          	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\VC\LIB\MSVCRTD.LIB
          	C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 12.0\VC\LIB\OLDNAMES.LIB
-         Source compilation required: input C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\CHAMBER.OBJ is newer than output C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\CPPEINDOPDRACHT.PDB.
+         Source compilation required: input C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\INVENTORY.OBJ is newer than output C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\CPPEINDOPDRACHT.EXE.
          Environment Variables passed to tool:
-           VS_UNICODE_OUTPUT=1704
+           VS_UNICODE_OUTPUT=1956
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.lib" /MACHINE:X86 Debug\Enemy.obj
          Debug\Hero.obj
          Debug\Inventory.obj
@@ -403,7 +425,7 @@
          Debug\Chamber.obj
          Debug\MapObject.obj
          Tracking command:
-         C:\Program Files (x86)\MSBuild\12.0\bin\Tracker.exe /a /d "C:\Program Files (x86)\MSBuild\12.0\bin\FileTracker.dll" /i C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.tlog /r "C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\CHAMBER.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\ENEMY.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\HERO.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\INVENTORY.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\MAIN.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\MAP.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\MAPOBJECT.OBJ" /b MSBuildConsole_CancelEventb2566877ccdd47c7af85a19116db1c95  /c "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe"  /ERRORREPORT:PROMPT /OUT:"C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.lib" /MACHINE:X86 Debug\Enemy.obj
+         C:\Program Files (x86)\MSBuild\12.0\bin\Tracker.exe /a /d "C:\Program Files (x86)\MSBuild\12.0\bin\FileTracker.dll" /i C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.tlog /r "C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\CHAMBER.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\ENEMY.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\HERO.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\INVENTORY.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\MAIN.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\MAP.OBJ|C:\USERS\STEFAN\DOCUMENTS\SOURCETREE\CPPEINDOPDRACHT\CPPEINDOPDRACHT\CPPEINDOPDRACHT\DEBUG\MAPOBJECT.OBJ" /b MSBuildConsole_CancelEvent93c2558190ce4ebd94fdf62c8d11954d  /c "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe"  /ERRORREPORT:PROMPT /OUT:"C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\stefan\Documents\Sourcetree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.lib" /MACHINE:X86 Debug\Enemy.obj
          Debug\Hero.obj
          Debug\Inventory.obj
          Debug\Main.obj
@@ -542,4 +564,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.84
+Time Elapsed 00:00:04.50
