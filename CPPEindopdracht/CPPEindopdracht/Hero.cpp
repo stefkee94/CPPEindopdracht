@@ -204,8 +204,8 @@ Hero::Hero(string hero_name, string start_item)
 	level = 1;
 	currentHp = maxHp = 10;
 	experience = 0;
-	attack = 4;
-	defense = 2;
+	attack = 10;
+	defense = 20;
 	notice = 1;
 	killed_enemies = 0;
 

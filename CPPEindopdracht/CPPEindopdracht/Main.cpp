@@ -299,26 +299,57 @@ void Main::climbStairs(string side)
 {
 	if (side == "up")
 	{
-		if (hero->getKilledEnemies() >= map->getAmountOfEnemiesToKill())
+		if (floorNumber == 2 || floorNumber == 5)
 		{
-			if (map->hasStairsUp(hero->getXPos(), hero->getYPos()))
+			if (floorNumber == 2)
 			{
-				floorNumber++;
-				map = new Map(Map::horizontalMapSize, Map::verticalMapSize, floorNumber);
-				hero->setKilledEnemies(0);
-				floors.push_back(map);
-				hero->setXPos(0);
-				hero->setYPos(0);
+				if (hero->getKilledEnemies() >= map->getAmountOfEnemiesToKill())
+				{
+					if (map->chamberList[hero->getYPos()][hero->getXPos()].getAmountOfEnemies() == 0)
+					{
+						if (map->hasStairsUp(hero->getXPos(), hero->getYPos()))
+						{
+							floorNumber++;
+							map = new Map(Map::horizontalMapSize, Map::verticalMapSize, floorNumber);
+							hero->setKilledEnemies(0);
+							floors.push_back(map);
+							hero->setXPos(0);
+							hero->setYPos(0);
 
-				cout << hero->getName() << " climbed the stairs up to floor " << floorNumber << endl;
-			}
-			else
-			{
-				cout << "There is no stairs to the next floor" << endl;
+							cout << hero->getName() << " climbed the stairs up to floor " << floorNumber << endl;
+						}
+					}
+					else
+						cout << hero->getName() << " cannot move to the next floor because the boos of this floor isn't killed" << endl;
+				}
+				else
+					cout << hero->getName() << " cannot move to the next floor because the hero killed to less enemies in this floor" << endl;
 			}
 		}
 		else
-			cout << hero->getName() << " cannot move to the next floor because the hero killed to less enemies in this floor" << endl;
+		{
+			if (hero->getKilledEnemies() >= map->getAmountOfEnemiesToKill())
+			{
+				if (map->hasStairsUp(hero->getXPos(), hero->getYPos()))
+				{
+					floorNumber++;
+					map = new Map(Map::horizontalMapSize, Map::verticalMapSize, floorNumber);
+					hero->setKilledEnemies(0);
+					floors.push_back(map);
+					hero->setXPos(0);
+					hero->setYPos(0);
+
+					cout << hero->getName() << " climbed the stairs up to floor " << floorNumber << endl;
+				}
+				else
+				{
+					cout << "There is no stairs to the next floor" << endl;
+				}
+			}
+			else
+				cout << hero->getName() << " cannot move to the next floor because the hero killed to less enemies in this floor" << endl;
+		}
+		
 	}
 	else if (side == "down")
 	{
@@ -387,6 +418,13 @@ void Main::goTo(string exit)
 	{
 		hero->setCurrentHp(hero->getCurrentHp() - 1);
 		cout << "Oops, a trap has not been discovered, " << hero->getName() << " loses 1 Hp, you have now " << hero->getCurrentHp() << " from a total of " << hero->getMaxHp() << endl;
+
+		if (hero->getCurrentHp() <= 0)
+		{
+			cout << endl;
+			cout << "You are dead" << endl;
+			playing = false;
+		}
 	}
 
 	if (map->hasExit(hero->getXPos(), hero->getYPos(), exit))
@@ -586,6 +624,9 @@ void Main::attackEnemyWithGrenade(int damage)
 					addSkills();
 			}
 			map->hitEnemy(x, y, enemies_in_chamber[i]->getName(), damage);
+
+			if (!map->hasEnemies(x, y))
+				inCombat = false;
 		}
 		cout << "You have " << hero->getCurrentHp() << " HP left -> you have " << hero->getExp() << "/" << hero->getExpNeeded() << " experience" << endl;
 	}

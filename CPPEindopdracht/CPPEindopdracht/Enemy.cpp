@@ -31,10 +31,8 @@ int Enemy::getEnemyLevel()
 	return level;
 }
 
-Enemy::Enemy(EnemyType eType, int floorNumber, int number)
+Enemy::Enemy(EnemyType eType, int floorNumber, int number) : type(eType)
 {
-	type = eType;
-
 	std::ostringstream oss;
 	oss << getEnemyName(type) << number;
 	name = oss.str();

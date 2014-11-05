@@ -317,7 +317,7 @@ void Chamber::generateRandomEnemies()
 	if ((floorNumber == 2 && hasStairsUp()) || (floorNumber == 5))
 	{
 		int bossNumber;
-		if (floorNumber == 3)
+		if (floorNumber == 2)
 			bossNumber = 1;
 		else
 			bossNumber = 2;
@@ -635,12 +635,6 @@ void Chamber::setMarked()
 
 void Chamber::generate()
 {
-	generateRandomExits(x, y);
-	
-	generateRandomItems();
-	generateRandomTraps();
-	generateRandomDescription();
-
 	//Check if there is already a stairs up and/ or down in the map
 	if (floorNumber == 1 || floorNumber == 5)
 	{
@@ -651,14 +645,16 @@ void Chamber::generate()
 	{
 		generateStairs();
 	}
+
+	generateRandomExits(x, y);
+	generateRandomItems();
+	generateRandomTraps();
+	generateRandomDescription();
 	generateRandomEnemies();
 }
 
-Chamber::Chamber(int _x, int _y, int floor_number)
+Chamber::Chamber(int _x, int _y, int floor_number) : x(_x), y(_y), floorNumber(floor_number)
 {
-	floorNumber = floor_number;
-	x = _x;
-	y = _y;
 	visited = false;
 	marked = false;
 	stairsUp = false;
