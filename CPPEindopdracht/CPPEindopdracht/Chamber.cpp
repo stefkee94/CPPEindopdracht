@@ -330,7 +330,6 @@ void Chamber::generateRandomEnemies()
 
 		for (int i = 0; i < numberOfEnemies; ++i)
 		{
-			//TODO make random enemy
 			EnemyType randEnemy = EnemyType(rand() % 4);
 			Enemy* newEnemy = new Enemy(randEnemy, floorNumber, i);
 			enemies.push_back(newEnemy);
@@ -347,7 +346,7 @@ void Chamber::generateRandomItems()
 		//Add one or more items in chamber
 		// maximum 3 items in one room random
 		item_types.resize(randomNumber(0, 3));
-		for (int i = 0; i < item_types.size(); ++i)
+		for (unsigned int i = 0; i < item_types.size(); ++i)
 		{
 			string value;
 			ItemType type = static_cast<ItemType>(rand() % (int)ItemType::NOITEM);
@@ -732,11 +731,6 @@ Chamber::Chamber(const Chamber& other)
 	}
 }
 
-//Chamber::Chamber(Chamber&& other)
-//{
-//
-//}
-
 Chamber& Chamber::operator=(const Chamber& other)
 {
 	if (this != &other)
@@ -765,22 +759,12 @@ Chamber& Chamber::operator=(const Chamber& other)
 
 		for (Enemy* e : other.enemies)
 		{
-			// TODO FIX THIS LEAK
 			Enemy* clone = new Enemy(*e);
 			enemies.push_back(clone);
 		}
 	}
 	return *this;
 }
-
-//Chamber& Chamber::operator=(Chamber&& other)
-//{
-//	if (this != &other)
-//	{
-//		
-//	}
-//	return *this;
-//}
 
 Chamber::~Chamber()
 {

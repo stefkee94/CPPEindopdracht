@@ -1,4 +1,4 @@
-Name : stefan
+Name : henk
 Level : 1
 Current hp : 5
 Max hp : 5

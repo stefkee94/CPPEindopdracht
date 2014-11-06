@@ -69,6 +69,11 @@ void Hero::useItem(string itemName)
 		cout << itemName << " is not a valid item to use" << endl;
 }
 
+bool Hero::hasItem(string itemName)
+{
+	return inventory.hasItem(itemName);
+}
+
 #pragma region gettersAndSetters
 int Hero::getXPos()
 {

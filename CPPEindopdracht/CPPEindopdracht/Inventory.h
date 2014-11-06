@@ -25,6 +25,7 @@ public:
 	void printInventory();
 	bool checkIfInventoryIsEmpty();
 	vector<string> getAllItems();
+	bool hasItem(string itemName);
 	void addItem(string item);
 	string dropItem(string itemName);
 

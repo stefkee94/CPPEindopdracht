@@ -195,19 +195,6 @@ void Map::linkAllChambers(int x, int y)
 				markChambers(x, y);
 			}
 		}
-		////if everything else failed try going up again
-		//else if (y > 0)
-		//{
-		//	if (chamberList[(y - 1)][x].isMarked())
-		//	{
-		//		y--;
-		//	}
-		//	else
-		//	{
-		//		y--;
-		//		newRoom = true;
-		//	}
-		//}
 	}
 }
 #pragma endregion MapGeneratingMethods
@@ -338,8 +325,8 @@ void Map::printMap(int curXPos, int curYPos)
 			Chamber current = chamberList[y / 2][x];
 
 			//If the current chamber has any exits it is a room
-			//if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()) && current.isVisited())
-			if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()))
+			if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()) && current.isVisited())
+			//if ((current.hasExitEast() || current.hasExitNorth() || current.hasExitSouth() || current.hasExitWest()))
 			{
 				//If the current has an exit to the south, on the next row there has to be shown a '|'
 				if (current.hasExitSouth())
