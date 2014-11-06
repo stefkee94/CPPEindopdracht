@@ -64,6 +64,11 @@ void Hero::useItem(string itemName)
 		cout << itemName << " is not a valid item to use" << endl;
 }
 
+bool Hero::hasItem(string itemName)
+{
+	return inventory.hasItem(itemName);
+}
+
 #pragma region gettersAndSetters
 int Hero::getXPos()
 {
@@ -234,7 +239,6 @@ Hero::Hero(string hero_name, string start_item)
 
 	//inventory.addItem(start_item);
 	loadHeroInfo();
-	
 }
 
 Hero::~Hero()

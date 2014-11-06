@@ -72,7 +72,6 @@ MapObject::MapObject()
 {
 }
 
-
 MapObject::~MapObject()
 {
 }

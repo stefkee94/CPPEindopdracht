@@ -204,7 +204,7 @@ void Main::printRest()
 	{
 		if (enemiesAttacking)
 		{
-			for (int i = 0; i < enemies.size(); ++i)
+			for (unsigned int i = 0; i < enemies.size(); ++i)
 			{
 				int damage = map->enemyAttack(hero->getXPos(), hero->getYPos(), *hero, i);
 				hero->Hit(damage);
@@ -230,7 +230,7 @@ void Main::printItem()
 	{
 		cout << hero->getName() << " found something secret" << endl;
 
-		for (int i = 0; i < items.size(); ++i)
+		for (unsigned int i = 0; i < items.size(); ++i)
 			cout << "item " << i << ": " << items[i] << endl;
 
 		cout << "If you wanna add this to your inventory type 'pick' <itemname>" << endl;
@@ -447,7 +447,6 @@ void Main::goTo(string exit)
 		}
 
 		map->setVisited(hero->getXPos(), hero->getYPos());
-		// TODO beschrijving van de specifieke kamer
 		setDescriptionOfRoom(hero->getXPos(), hero->getYPos());
 		cout << endl << "Welcome in the room to the " + exit + " of the previous room." << endl;
 
@@ -483,13 +482,19 @@ void Main::dropItem(string itemName)
 
 void Main::useItem(string itemName)
 {
+	if (!hero->hasItem(itemName))
+	{
+		cout << endl << "You do not have a " << itemName << " in your inventory." << endl << endl;
+		return;
+	}
+
 	if (itemName == "grenade" || itemName == "bomb")
 	{
 		if (inCombat)
 		{
 			int damage = (itemName == "grenade") ? 5 : 7;
 			hero->useItem(itemName);
-			cout << "You pulled the pin out of the grenade and threw it to some enemies";
+			cout << endl << "You pulled the pin out of the grenade and threw it to some enemies";
 			cout << endl << "3....." << endl;
 			Sleep(1000);
 			cout << endl << "2....." << endl;
@@ -501,7 +506,7 @@ void Main::useItem(string itemName)
 		}
 		else 
 		{
-			cout << "You have to be in combat to use your grenade, go in combat with the command : engage" << endl;
+			cout << endl << "You have to be in combat to use your grenade, go in combat with the command : engage" << endl << endl;
 		}
 	}
 	else
@@ -608,7 +613,7 @@ void Main::attackEnemyWithGrenade(int damage)
 	if (map->hasEnemies(x, y))
 	{
 		vector<Enemy*> enemies_in_chamber = map->getAllEnemies(x, y);
-		for (int i = 0; i < enemies_in_chamber.size(); i++)
+		for (unsigned int i = 0; i < enemies_in_chamber.size(); i++)
 		{
 			if (damage > 0)
 				cout << "You succesfully hit enemy " << enemies_in_chamber[i]->getName() << " with damage of " << damage << endl;
@@ -668,7 +673,7 @@ void Main::doCommand(string command)
 	//if command = quit
 	if (command == singleCommandsGeneral[QUIT])
 	{
-		exit(EXIT_SUCCESS);
+		playing = false;
 		return;
 	}
 	//if command = ?
@@ -907,7 +912,7 @@ Main::Main()
 		cout << "\n";
 		cin >> start_item;
 
-		for (int j = 0; j < items.size(); j++)
+		for (unsigned int j = 0; j < items.size(); j++)
 		{
 			if (start_item == items[j])
 			{
@@ -947,12 +952,27 @@ Main::Main()
 		}
 	}
 
-	string answer;
-	cout << "Would you like to play again?" << endl;
-	cin >> answer;
+	bool validAnswer = false;
+	while (!validAnswer)
+	{
+		string answer;
+		cout << endl << "Would you like to play again?" << endl;
+		cin >> answer;
 
-	if (answer == "yes")
-		Main();
+		if (answer == "yes")
+		{
+			validAnswer = true;
+			Main();
+		}
+		else if (answer == "no")
+		{
+			validAnswer = true;
+		}
+		else
+		{
+			cout << "Please answer with yes or no." << endl;
+		}
+	}
 }
 
 std::vector<string> Main::printAvailableItems()
@@ -965,7 +985,7 @@ std::vector<string> Main::printAvailableItems()
 	string_item_types[static_cast<size_t>(ItemType::POTION)] = "potion";
 	string_item_types[static_cast<size_t>(ItemType::SWORD)] = "sword";
 
-	for (int i = 0; i < string_item_types.size(); i++)
+	for (unsigned int i = 0; i < string_item_types.size(); i++)
 		cout << string_item_types[i] << endl;
 
 	return string_item_types;

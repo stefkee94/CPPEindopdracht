@@ -24,6 +24,7 @@ public:
 
 	void printInventory();
 	bool checkIfInventoryIsEmpty();
+	bool hasItem(string itemName);
 	void addItem(string item);
 	string dropItem(string itemName);
 

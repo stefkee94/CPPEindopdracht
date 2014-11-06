@@ -1,8 +1,8 @@
-Name : stefan
+Name : henk
 Level : 1
 Current hp : 0
-Experience : 1
+Experience : 0
 Attack : 4
 Defense : 2
 Notice : 1
-Killed enemies : 1
+Killed enemies : 0

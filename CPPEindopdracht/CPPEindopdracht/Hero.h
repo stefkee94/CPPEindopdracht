@@ -26,6 +26,7 @@ public:
 	string dropItem(string itemName);
 	void useItem(string itemName);
 	void removeItemFromInventory(string itemName);
+	bool hasItem(string itemName);
 
 	int getXPos();
 	int getYPos();

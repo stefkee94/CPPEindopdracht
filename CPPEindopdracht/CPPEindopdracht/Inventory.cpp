@@ -39,6 +39,17 @@ bool Inventory::checkIfInventoryIsEmpty()
 	return temp_cond;
 }
 
+bool Inventory::hasItem(string itemName)
+{
+	ItemType itemType = getItemType(itemName);
+	for (int i = 0; i < TOTALSPACE; ++i)
+	{
+		if (items[i] == itemType)
+			return true;
+	}
+	return false;
+}
+
 //return if the item is added or if the inventory is full
 void Inventory::addItem(string itemName)
 {
