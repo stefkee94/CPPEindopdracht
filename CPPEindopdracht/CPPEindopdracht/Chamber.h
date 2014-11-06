@@ -41,6 +41,7 @@ public:
 	bool hasStairsDown();
 	bool hasEnemies();
 	bool hasEnemy(string name);
+	bool hasItem(string itemName);
 	int getAmountOfEnemies();
 	Enemy& getEnemy(string name);
 	vector<Enemy*> getAllEnemies();
@@ -48,6 +49,8 @@ public:
 	string getDescription();
 	vector<string> getItemTypes();
 
+	void removeItem(string itemName);
+	
 	void setTrap(bool noticed_trap);
 	void setExitNorth();
 	void setExitEast();

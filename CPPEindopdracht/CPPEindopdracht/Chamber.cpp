@@ -498,6 +498,29 @@ int Chamber::enemyAttack(MapObject hero, int index)
 	return damage;
 }
 
+void Chamber::removeItem(string itemName)
+{
+	for (std::vector<string>::iterator iter = item_types.begin(); iter != item_types.end(); ++iter)
+	{
+		if (*iter == itemName)
+		{
+			// Remove item which is chosen and already added
+			item_types.erase(iter);
+			break;
+		}
+	}
+}
+
+bool Chamber::hasItem(string itemName)
+{
+	for (int i = 0; i < item_types.size(); ++i)
+	{
+		if (itemName == item_types[i])
+			return true;
+	}
+	return false;
+}
+
 #pragma region gettersAndSetters
 bool Chamber::hasExitNorth()
 {

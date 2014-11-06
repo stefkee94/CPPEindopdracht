@@ -25,8 +25,8 @@ public:
 	virtual ~Main();
 
 private:
-	Map* map;
-	Hero* hero;
+	Map* map = nullptr;
+	Hero* hero = nullptr;
 	bool playing;
 	bool inCombat, hasNoticed;
 	int horizontal = 10;
@@ -35,12 +35,6 @@ private:
 	const int FINALFLOOR = 5;
 	string lastRoomDirection;
 	vector<Map*> floors;
-
-	string hero_name;
-	bool hero_name_set = false;
-
-	string start_item;
-	bool start_item_selected = false;
 
 	bool checkCommand(string command);
 

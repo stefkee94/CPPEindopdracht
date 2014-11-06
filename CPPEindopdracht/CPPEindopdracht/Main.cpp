@@ -510,22 +510,18 @@ void Main::useItem(string itemName)
 
 void Main::pickItem(string itemName)
 {
+	if (!map->chamberList[hero->getYPos()][hero->getXPos()].hasItem(itemName))
+	{
+		cout << endl << "There is no item " << itemName << " in this room" << endl;
+		return;
+	}
+
 	hero->addItem(itemName);
 	// Get the item type
 	ItemType item = hero->getItemType(itemName);
 	if (!(item == ItemType::NOITEM))
 	{
-		std::vector<string> itemsLeftInRoom = map->chamberList[hero->getYPos()][hero->getXPos()].getItemTypes();
-		for (std::vector<string>::iterator iter = itemsLeftInRoom.begin(); iter != itemsLeftInRoom.end(); ++iter)
-		{
-			if (*iter == itemName)
-			{
-				// Remove item which is chosen and already added
-				itemsLeftInRoom.erase(iter);
-				map->chamberList[hero->getYPos()][hero->getXPos()].setItemTypes(itemsLeftInRoom);
-				break;
-			}
-		}
+		map->chamberList[hero->getYPos()][hero->getXPos()].removeItem(itemName);	
 	}
 }
 
@@ -886,40 +882,6 @@ Main::Main()
 
 	cout << "\n";
 
-	while (!hero_name_set)
-	{
-		cout << "Before we start on this adventure, what's your name?" << endl;
-		cin >> hero_name;
-		if (hero_name.size() > 25)
-			cout << "Name has to contain 25 chars or less" << endl;
-		else
-		{
-
-			cout << "\n" << "Welcome : " << hero_name << endl << "\n";
-			hero_name_set = true;
-		}
-	}
-
-	while (!start_item_selected)
-	{
-		cout << "Choose one item to start with, you can choose the following items to add in your inventory : " << endl << "\n";
-		std::vector<string> items = printAvailableItems();
-		cout << "\n";
-		cin >> start_item;
-
-		for (int j = 0; j < items.size(); j++)
-		{
-			if (start_item == items[j])
-			{
-				start_item_selected = true;
-				cout << "\n" << "You selected the item : " << start_item << " to start your adventure with" << endl << "\n";
-			}
-		}
-		if (start_item_selected == false)
-			cout << "\n" << "Your selected item : " << start_item << " is not known, please select a known item to start with" << endl << "\n";
-
-	}
-
 	// Create new random Map
 	map = new Map(horizontal, vertical, floorNumber);
 
@@ -927,8 +889,78 @@ Main::Main()
 
 	std::vector<ItemType> item_types;
 
-	// Create hero in the beginning with name and one item
-	hero = new Hero(hero_name, start_item);
+	// Load hero info yes / no
+	bool load_hero_info = false;
+	while (!load_hero_info)
+	{
+		string answer;
+		cout << endl << "Do you want to load your hero info?" << endl;
+		cin >> answer;
+
+		if (answer == "yes")
+		{
+			hero = new Hero();
+			load_hero_info = true;
+			cout << "The hero information is succesfully loaded" << endl;
+		}
+		else if (answer == "no")
+		{
+			load_hero_info = true;
+		}
+		else
+		{
+			cout << "Please answer with yes or no. " << endl;
+		}
+	}
+
+	if (hero == nullptr)
+	{
+		string hero_name;
+		bool hero_name_set = false;
+
+		while (!hero_name_set)
+		{
+			cout << "Before we start on this adventure, what's your name?" << endl;
+			cin >> hero_name;
+			if (hero_name.size() > 25)
+				cout << "Name has to contain 25 chars or less" << endl;
+			else
+			{
+
+				cout << "\n" << "Welcome : " << hero_name << endl << "\n";
+				hero_name_set = true;
+			}
+		}
+
+		string start_item;
+		bool start_item_selected = false;
+
+		while (!start_item_selected)
+		{
+			cout << "Choose one item to start with, you can choose the following items to add in your inventory : " << endl << "\n";
+			std::vector<string> items = printAvailableItems();
+			cout << "\n";
+			cin >> start_item;
+
+			for (int j = 0; j < items.size(); j++)
+			{
+				if (start_item == items[j])
+				{
+					start_item_selected = true;
+					cout << "\n" << "You selected the item : " << start_item << " to start your adventure with" << endl << "\n";
+				}
+			}
+			if (start_item_selected == false)
+				cout << "\n" << "Your selected item : " << start_item << " is not known, please select a known item to start with" << endl << "\n";
+
+		}
+
+		// Create hero in the beginning with name and one item
+		hero = new Hero(hero_name, start_item);
+	}
+	
+
+	
 
 	printExits();
 

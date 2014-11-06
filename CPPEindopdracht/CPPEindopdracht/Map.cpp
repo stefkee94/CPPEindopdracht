@@ -315,6 +315,11 @@ void Map::setVisited(int x, int y)
 	chamberList[y][x].setVisited();
 }
 
+bool Map::hasItem(int x, int y, string itemName)
+{
+	return chamberList[y][x].hasItem(itemName);
+}
+
 void Map::printMap(int curXPos, int curYPos)
 {
 	vector<vector<string>> stringMap;

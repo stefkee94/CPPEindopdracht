@@ -17,6 +17,7 @@ class Hero : public MapObject
 {
 public:
 	Hero(string hero_name, string start_item);
+	Hero();
 	virtual ~Hero();
 
 	void printInventory();

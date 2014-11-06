@@ -42,6 +42,8 @@ public:
 	Enemy& getEnemy(int x, int y, string name);
 	int getAmountOfEnemies(int x, int y);
 
+	bool hasItem(int x, int y, string itemName);
+
 	int enemyAttack(int x, int y, MapObject hero, int index);
 	void hitEnemy(int x, int y, string enemyName, int damage);
 	void setVisited(int x, int y);

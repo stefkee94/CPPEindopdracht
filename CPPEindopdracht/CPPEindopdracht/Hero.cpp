@@ -1,5 +1,10 @@
 #include "Hero.h"
 #include <fstream>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <iostream>
 
 void Hero::printInventory()
 {
@@ -194,7 +199,51 @@ void Hero::removeItemFromInventory(string itemName)
 
 void Hero::loadHeroInfo()
 {
-	
+	ifstream input_file("hero_information.txt");
+	string line;
+	int count = 1;
+	while (getline(input_file, line))
+	{
+		size_t position = 0;
+		string delimiter = ":";
+		string value;
+		position = line.find(delimiter);
+		value = line.substr(position+1).erase(0, delimiter.length());
+
+		// Check for each line and set the value
+		switch (count)
+		{
+		case 1:
+			name = value;
+			break;
+		case 2:
+			level = atoi(value.c_str());
+			break;
+		case 3:
+			currentHp = atoi(value.c_str());
+			break;
+		case 4:
+			maxHp = atoi(value.c_str());
+			break;
+		case 5:
+			experience = atoi(value.c_str());
+			break;
+		case 6:
+			attack = atoi(value.c_str());
+			break;
+		case 7:
+			defense = atoi(value.c_str());
+		case 8:
+			notice = atoi(value.c_str());
+		case 9:
+			killed_enemies = atoi(value.c_str());
+			break;
+		default:
+			inventory.addItem(value);
+		}
+		count++;
+	}
+
 }
 
 void Hero::saveHeroInfo()
@@ -205,11 +254,16 @@ void Hero::saveHeroInfo()
 	output_file << "Name : " << name << endl;
 	output_file << "Level : " << level << endl;
 	output_file << "Current hp : " << currentHp << endl;
+	output_file << "Max hp : " << maxHp << endl;
 	output_file << "Experience : " << experience << endl;
 	output_file << "Attack : " << attack << endl;
 	output_file << "Defense : " << defense << endl;
 	output_file << "Notice : " << notice << endl;
 	output_file << "Killed enemies : " << killed_enemies << endl;
+	
+	std::vector<string> carried_items = inventory.getAllItems();
+	for (int i = 0; i < carried_items.size(); ++i)
+		output_file << "Item" << i << " : " << carried_items[i] << endl;
 
 	output_file.close();
 }
@@ -232,9 +286,16 @@ Hero::Hero(string hero_name, string start_item)
 	notice = 1;
 	killed_enemies = 0;
 
-	//inventory.addItem(start_item);
+	inventory.addItem(start_item);
+}
+
+Hero::Hero()
+{
+	//Start position
+	xPos = 0;
+	yPos = 0;
+
 	loadHeroInfo();
-	
 }
 
 Hero::~Hero()

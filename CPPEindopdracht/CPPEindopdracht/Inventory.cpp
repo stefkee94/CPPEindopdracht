@@ -62,6 +62,35 @@ void Inventory::addItem(string itemName)
 	}
 }
 
+vector<string> Inventory::getAllItems()
+{
+	std::vector<string> availableItems;
+	for (int i = 0; i < TOTALSPACE; ++i)
+	{
+		if (items[i] != ItemType::NOITEM)
+		{
+			availableItems.push_back(getItemName(items[i]));
+		}
+	}
+
+	return availableItems;
+}
+
+string Inventory::getItemName(ItemType itemType)
+{
+	switch (itemType)
+	{
+		case ItemType::BEER:
+			return "beer";
+		case ItemType::GRENADE:
+			return "grenade";
+		case ItemType::POTION:
+			return "potion";
+		case ItemType::SWORD:
+			return "sword";
+	}
+}
+
 string Inventory::dropItem(string itemName)
 {
 	ItemType item = getItemType(itemName);

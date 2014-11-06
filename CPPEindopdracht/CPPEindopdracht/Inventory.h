@@ -24,10 +24,12 @@ public:
 
 	void printInventory();
 	bool checkIfInventoryIsEmpty();
+	vector<string> getAllItems();
 	void addItem(string item);
 	string dropItem(string itemName);
 
 	ItemType getItemType(string itemName);
+	string getItemName(ItemType itemType);
 
 private:
 	const int TOTALSPACE = 10;
