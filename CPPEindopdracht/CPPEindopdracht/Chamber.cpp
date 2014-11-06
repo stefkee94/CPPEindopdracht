@@ -512,7 +512,7 @@ void Chamber::removeItem(string itemName)
 
 bool Chamber::hasItem(string itemName)
 {
-	for (int i = 0; i < item_types.size(); ++i)
+	for (unsigned int i = 0; i < item_types.size(); ++i)
 	{
 		if (itemName == item_types[i])
 			return true;

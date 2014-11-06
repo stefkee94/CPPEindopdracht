@@ -924,7 +924,6 @@ Main::Main()
 		bool hero_name_set = false;
 
 		while (!hero_name_set)
-		for (unsigned int j = 0; j < items.size(); j++)
 		{
 			cout << "Before we start on this adventure, what's your name?" << endl;
 			cin >> hero_name;
@@ -948,7 +947,7 @@ Main::Main()
 			cout << "\n";
 			cin >> start_item;
 
-			for (int j = 0; j < items.size(); j++)
+			for (unsigned int j = 0; j < items.size(); j++)
 			{
 				if (start_item == items[j])
 				{

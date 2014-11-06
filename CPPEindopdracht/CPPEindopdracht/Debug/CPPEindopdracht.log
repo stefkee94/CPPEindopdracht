@@ -1,53 +1,19 @@
-<<<<<<< HEAD
-﻿Build started 11/6/2014 12:58:54 PM.
-     1>Project "C:\Users\stefan\Documents\SourceTree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Chamber.cpp Main.cpp Map.cpp
-     1>cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
-         Chamber.cpp
-     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\chamber.cpp(350): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\chamber.cpp(516): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\chamber.cpp(577): warning C4172: returning address of local variable or temporary
-         Main.cpp
-     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\main.cpp(207): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\main.cpp(233): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\main.cpp(607): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\main.cpp(945): warning C4018: '<' : signed/unsigned mismatch
-     1>c:\users\stefan\documents\sourcetree\cppeindopdracht\cppeindopdracht\cppeindopdracht\main.cpp(1000): warning C4018: '<' : signed/unsigned mismatch
-         Map.cpp
-         Generating Code...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\stefan\Documents\SourceTree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\stefan\Documents\SourceTree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\stefan\Documents\SourceTree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.lib" /MACHINE:X86 Debug\Enemy.obj
-=======
-﻿Build started 6-11-2014 12:16:05.
+﻿Build started 6-11-2014 13:12:12.
      1>Project "C:\Users\Fabian Claasen\GitHub\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Chamber.cpp Main.cpp
-         Main.cpp
-         Chamber.cpp
-     1>c:\users\fabian claasen\github\cppeindopdracht\cppeindopdracht\cppeindopdracht\chamber.cpp(553): warning C4172: returning address of local variable or temporary
-         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Map.cpp
+         Map.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Fabian Claasen\GitHub\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Fabian Claasen\GitHub\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Fabian Claasen\GitHub\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.lib" /MACHINE:X86 Debug\Enemy.obj
->>>>>>> c856dac5497985f9024f9311f30e3601875dcd3d
          Debug\Hero.obj
          Debug\Inventory.obj
          Debug\Main.obj
          Debug\Map.obj
          Debug\Chamber.obj
          Debug\MapObject.obj
-<<<<<<< HEAD
-         CPPEindopdracht.vcxproj -> C:\Users\stefan\Documents\SourceTree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.exe
-     1>Done Building Project "C:\Users\stefan\Documents\SourceTree\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:03.27
-=======
          CPPEindopdracht.vcxproj -> C:\Users\Fabian Claasen\GitHub\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\Debug\CPPEindopdracht.exe
      1>Done Building Project "C:\Users\Fabian Claasen\GitHub\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht\CPPEindopdracht.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.03
->>>>>>> c856dac5497985f9024f9311f30e3601875dcd3d
+Time Elapsed 00:00:02.11

@@ -2,11 +2,9 @@ Name : henk
 Level : 1
 Current hp : 5
 Max hp : 5
-Experience : 2
+Experience : 0
 Attack : 4
 Defense : 2
 Notice : 1
-Killed enemies : 2
-Item0 : potion
-Item1 : beer
-Item2 : grenade
+Killed enemies : 0
+Item0 : grenade

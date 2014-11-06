@@ -267,7 +267,7 @@ void Hero::saveHeroInfo()
 	output_file << "Killed enemies : " << killed_enemies << endl;
 	
 	std::vector<string> carried_items = inventory.getAllItems();
-	for (int i = 0; i < carried_items.size(); ++i)
+	for (unsigned int i = 0; i < carried_items.size(); ++i)
 		output_file << "Item" << i << " : " << carried_items[i] << endl;
 
 	output_file.close();
